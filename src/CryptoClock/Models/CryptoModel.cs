@@ -2,12 +2,14 @@ using System;
 
 namespace CryptoClock.Models
 {
-    public class CryptoModel
+    public record CryptoModel
     {
-        public DateTime DateTime { get; set; }
+        public DateTime DateTime { get; init; }
 
-        public LightningModel Lightning { get; set; }
+        public LightningModel Lightning { get; init; }
         
-        public WeatherModel Weather { get; set; }
+        public WeatherModel Weather { get; init; }
+
+        public PriceModel Price { get; init; }
     }
 }

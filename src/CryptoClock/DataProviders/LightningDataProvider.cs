@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using CryptoClock.Configuration;
 using CryptoClock.Models;
@@ -39,12 +40,18 @@ namespace CryptoClock.DataProviders
             this.client = new LightningClient(channel);
         }
 
-        public Task ProvideForAsync(CryptoModel model)
+        public async Task<CryptoModel> EnrichAsync(CryptoModel model)
         {         
-            var info = client.GetInfo(new GetInfoRequest());
-            
+            var channels = await client.ListChannelsAsync(new ListChannelsRequest());
+            var balance = await client.WalletBalanceAsync(new WalletBalanceRequest());
 
-            return Task.CompletedTask;
+            var local = channels.Channels.Sum(x => x.LocalBalance);
+            var remote = channels.Channels.Sum(x => x.RemoteBalance);
+
+            return model with 
+            {
+                Lightning = new LightningModel(balance.ConfirmedBalance, balance.UnconfirmedBalance, local, remote)
+            };
         }
     }
 }

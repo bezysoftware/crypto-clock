@@ -5,6 +5,6 @@ namespace CryptoClock.DataProviders
 {
     public interface IDataProvider
     {
-        Task ProvideForAsync(CryptoModel model);
+        Task<CryptoModel> EnrichAsync(CryptoModel model);
     }
 }

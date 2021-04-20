@@ -53,7 +53,7 @@ namespace CryptoClock
 
             foreach (var provider in this.providers)
             {
-                await provider.ProvideForAsync(model);
+                await provider.EnrichAsync(model);
             }
 
             return model;

@@ -2,10 +2,8 @@ using System;
 
 namespace CryptoClock.Models
 {
-    public class LightningModel
+    public record LightningModel(long ConfirmedBalance, long UnconfirmedBalance, long LocalBalance, long RemoteBalance)
     {
-        public decimal LocalBalance { get; set; }
-
-        public decimal RemoteBalance { get; set; }
+        public long TotalBalance => ConfirmedBalance + UnconfirmedBalance;
     }
 }

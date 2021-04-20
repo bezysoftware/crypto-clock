@@ -26,7 +26,7 @@ namespace CryptoClock.DataProviders
             this.weatherOptions = weatherOptions;
         }
 
-        public async Task ProvideForAsync(CryptoModel model)
+        public async Task<CryptoModel> EnrichAsync(CryptoModel model)
         {
             var c = this.weatherOptions.Value;
             var weather = await this.http.GetObjectAsync<Weather>(string.Format(WeatherApiUrl, c.Location, c.OpenWeatherMapApiKey, c.Units));
@@ -41,12 +41,15 @@ namespace CryptoClock.DataProviders
 
             var imagePath = await GetImagePathAsync(icon);
 
-            model.Weather = new WeatherModel 
+            return model with 
             {
-                Units = unit,
-                Location = c.Location,
-                Temperature = (int)weather.main.feels_like,
-                Image = imagePath
+                Weather = new WeatherModel 
+                {
+                    Units = unit,
+                    Location = c.Location,
+                    Temperature = (int)weather.main.feels_like,
+                    Image = imagePath
+                }
             };
         }
 

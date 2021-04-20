@@ -20,8 +20,10 @@ namespace CryptoClock
                 {
                     services.Configure<LightningConfig>(context.Configuration.GetSection("LN"));
                     services.Configure<WeatherConfig>(context.Configuration.GetSection("Weather"));
+                    services.Configure<PriceConfig>(context.Configuration.GetSection("Price"));
                     services.AddHostedService<Worker>();
                     services.AddHttpClient();
+                    services.AddSingleton<IDataProvider, PriceDataProvider>();
                     services.AddSingleton<IDataProvider, DateTimeDataProvider>();
                     // services.AddSingleton<IDataProvider, LightningDataProvider>();
                     services.AddSingleton<IDataProvider, WeatherDataProvider>();

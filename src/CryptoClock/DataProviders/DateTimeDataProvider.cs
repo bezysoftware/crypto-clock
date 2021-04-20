@@ -6,10 +6,9 @@ namespace CryptoClock.DataProviders
 {
     public class DateTimeDataProvider : IDataProvider
     {
-        public Task ProvideForAsync(CryptoModel model)
+        public Task<CryptoModel> EnrichAsync(CryptoModel model)
         {
-            model.DateTime = DateTime.Now;
-            return Task.CompletedTask;
+            return Task.FromResult(model with { DateTime = DateTime.Now });
         }
     }
 }
