@@ -1,0 +1,34 @@
+﻿<widget description="Shows current weather">
+  <binding sizes="4x2,5x2,4x4" justify="spread" background="#eee" foreground="#000">
+
+    <row>
+      <column align="center" width="1">
+        <text align="end" size="large">28° C</text>
+      </column>
+      <column align="center" width="1">
+        <image align="start" name="raining.png" />
+      </column>
+    </row>
+
+    <line size="xsmall" foreground="#aaa" />
+
+    <row>
+      <column>
+        <text size="small" align="center">Tue</text>
+        <image align="center" name="sunny.png" />
+        <text align="center">30° C</text>
+      </column>
+      <column>
+        <text size="small" align="center">Wed</text>
+        <image align="center" name="raining.png" />
+        <text align="center">10° C</text>
+      </column>
+      <column>
+        <text size="small" align="center">Thu</text>
+        <image align="center" name="cloudy.png" />
+        <text align="center">20° C</text>
+      </column>
+    </row>
+    
+  </binding>
+</widget>

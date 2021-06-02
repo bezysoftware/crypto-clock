@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
-namespace CryptoClock
+namespace CryptoClock.Extensions
 {
     class HttpClientWithCertificate : HttpClient
     {
@@ -21,8 +21,8 @@ namespace CryptoClock
 
             return new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (_, serverCertificate, __, errors) => 
-                    errors == SslPolicyErrors.None || 
+                ServerCertificateCustomValidationCallback = (_, serverCertificate, __, errors) =>
+                    errors == SslPolicyErrors.None ||
                     serverCertificate.GetCertHashString() == certificateHash
             };
         }

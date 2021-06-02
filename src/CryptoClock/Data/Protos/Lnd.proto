@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package lnrpc;
 
-option csharp_namespace = "CryptoClock.Services.Lnd";
+option csharp_namespace = "CryptoClock.Data.Lnd";
 
 /*
  * Comments in this file will be directly parsed into the API

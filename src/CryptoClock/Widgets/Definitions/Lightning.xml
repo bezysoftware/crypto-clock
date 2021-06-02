@@ -1,0 +1,79 @@
+﻿<widget description="Shows overview of your lightning nodes">
+  <binding sizes="4x2,6x4" justify="start" background="#eee" foreground="#000">
+
+    <block>
+      <row>
+        <column>
+          <text align="start">8M</text>
+        </column>
+        <column>
+          <text align="end">3M</text>
+        </column>
+      </row>
+
+      <row>
+        <column width="8">
+          <line size="medium" foreground="#aaa" />
+        </column>
+        <column width="3">
+          <line size="medium" foreground="#444" />
+        </column>
+      </row>
+
+      <row>
+        <column>
+          <text size="small" align="start">Send</text>
+        </column>
+        <column width="auto" align="center">
+          <text  weight="bold">Total</text>
+        </column>
+        <column>
+          <text size="small" align="end">Receive</text>
+        </column>
+      </row>
+    </block>
+
+    <row>
+      <column>
+      </column>
+      <column>
+        <line size="xsmall" divider="true" foreground="#ddd" />
+      </column>
+      <column>
+      </column>
+    </row>
+
+    <block>
+      <row>
+        <column>
+          <text align="start">18M</text>
+        </column>
+        <column>
+          <text align="end">13M</text>
+        </column>
+      </row>
+
+      <row>
+        <column width="18">
+          <line size="large" foreground="#aaa" />
+        </column>
+        <column width="13">
+          <line size="large" foreground="#444" />
+        </column>
+      </row>
+
+      <row>
+        <column>
+          <text align="start">Send</text>
+        </column>
+        <column width="auto" align="center">
+          <text size="small">ACINQ</text>
+        </column>
+        <column>
+          <text align="end">Receive</text>
+        </column>
+      </row>
+    </block>
+
+  </binding>
+</widget>

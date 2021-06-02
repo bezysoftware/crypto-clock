@@ -1,5 +1,3 @@
-using System;
-
 namespace CryptoClock.Configuration
 {
     public class PriceConfig

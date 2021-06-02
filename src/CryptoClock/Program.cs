@@ -1,5 +1,7 @@
 ﻿using CryptoClock.Configuration;
-using CryptoClock.DataProviders;
+using CryptoClock.Data;
+using CryptoClock.Widgets.Rendering;
+using CryptoClock.Widgets.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,15 +20,24 @@ namespace CryptoClock
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((context, services) =>
                 {
+                    services.Configure<BitcoinConfig>(context.Configuration.GetSection("Bitcoin"));
                     services.Configure<LightningConfig>(context.Configuration.GetSection("LN"));
                     services.Configure<WeatherConfig>(context.Configuration.GetSection("Weather"));
                     services.Configure<PriceConfig>(context.Configuration.GetSection("Price"));
-                    services.AddHostedService<Worker>();
-                    services.AddHttpClient();
+                    services.Configure<RenderConfig>(context.Configuration.GetSection("Rendering"));
+                    services.Configure<ScreenConfig>(context.Configuration.GetSection("Screen"));
+
+                    services.AddSingleton<IDataProvider, BitcoinDataProvider>();
+                    services.AddSingleton<IDataProvider, LightningDataProvider>();
                     services.AddSingleton<IDataProvider, PriceDataProvider>();
                     services.AddSingleton<IDataProvider, DateTimeDataProvider>();
-                    // services.AddSingleton<IDataProvider, LightningDataProvider>();
                     services.AddSingleton<IDataProvider, WeatherDataProvider>();
+                    services.AddSingleton<IWidgetRenderer, WidgetRenderer>();
+                    services.AddSingleton<IWidgetRepository, WidgetRepository>();
+                    services.AddSingleton<ScreenManager>();
+
+                    services.AddHttpClient();
+                    services.AddHostedService<Worker>();
                 });
     }
 }

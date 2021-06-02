@@ -1,4 +1,4 @@
-using CryptoClock.Models;
+using CryptoClock.Data.Models;
 
 namespace CryptoClock.Configuration
 {
