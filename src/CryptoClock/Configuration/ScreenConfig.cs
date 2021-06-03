@@ -9,5 +9,7 @@
         public int Width { get; init; }
 
         public int Height { get; init; }
+
+        public string Type { get; set; }
     }
 }

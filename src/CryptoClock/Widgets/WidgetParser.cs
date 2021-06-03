@@ -4,13 +4,15 @@ using System.Xml.Serialization;
 
 namespace CryptoClock.Widgets
 {
-    public static class WidgetParser
+    public class WidgetParser : IWidgetParser
     {
         private static XmlSerializer serializer = new XmlSerializer(typeof(WidgetNode));
 
-        public static WidgetNode LoadFromFile(string id)
+        public WidgetNode LoadFromFile<T>(string id, T model)
         {
             using var stream = new FileStream($"Widgets/Definitions/{id}.xml", FileMode.Open);
+
+            // todo populate model
 
             return (WidgetNode)serializer.Deserialize(stream);
         }

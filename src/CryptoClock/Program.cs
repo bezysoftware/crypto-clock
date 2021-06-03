@@ -1,5 +1,7 @@
 ﻿using CryptoClock.Configuration;
 using CryptoClock.Data;
+using CryptoClock.Screens;
+using CryptoClock.Widgets;
 using CryptoClock.Widgets.Rendering;
 using CryptoClock.Widgets.Repository;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,14 +29,21 @@ namespace CryptoClock
                     services.Configure<RenderConfig>(context.Configuration.GetSection("Rendering"));
                     services.Configure<ScreenConfig>(context.Configuration.GetSection("Screen"));
 
-                    services.AddSingleton<IDataProvider, BitcoinDataProvider>();
-                    services.AddSingleton<IDataProvider, LightningDataProvider>();
+                    //services.AddSingleton<IDataProvider, BitcoinDataProvider>();
+                    //services.AddSingleton<IDataProvider, LightningDataProvider>();
                     services.AddSingleton<IDataProvider, PriceDataProvider>();
                     services.AddSingleton<IDataProvider, DateTimeDataProvider>();
                     services.AddSingleton<IDataProvider, WeatherDataProvider>();
                     services.AddSingleton<IWidgetRenderer, WidgetRenderer>();
                     services.AddSingleton<IWidgetRepository, WidgetRepository>();
+                    services.AddSingleton<IWidgetParser, WidgetParser>();
                     services.AddSingleton<ScreenManager>();
+
+#if DEBUG
+                    services.AddSingleton<IScreenPrinter, DebugScreenPrinter>();
+#else
+                    services.AddSingleton<IScreenPrinter, ScreenPrinter>();
+#endif
 
                     services.AddHttpClient();
                     services.AddHostedService<Worker>();

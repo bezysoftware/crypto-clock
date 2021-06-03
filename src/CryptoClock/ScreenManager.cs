@@ -1,38 +1,60 @@
-﻿using CryptoClock.Configuration;
+﻿using CryptoClock.Data;
+using CryptoClock.Data.Models;
+using CryptoClock.Screens;
+using CryptoClock.Widgets;
 using CryptoClock.Widgets.Rendering;
 using CryptoClock.Widgets.Repository;
-using Microsoft.Extensions.Options;
-using System.Diagnostics;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CryptoClock
 {
     public class ScreenManager
     {
-        private readonly IWidgetRenderer widgetRenderer;
-        private readonly IWidgetRepository widgetRepository;
-        private readonly ScreenConfig screen;
+        private readonly IEnumerable<IDataProvider> providers;
+        private readonly IWidgetRenderer renderer;
+        private readonly IWidgetParser parser;
+        private readonly IWidgetRepository repository;
+        private readonly IScreenPrinter printer;
 
-        public ScreenManager(IWidgetRenderer widgetRenderer, IWidgetRepository widgetRepository, IOptions<ScreenConfig> options)
+        public ScreenManager(
+            IEnumerable<IDataProvider> providers,
+            IWidgetRenderer renderer, 
+            IWidgetParser parser, 
+            IWidgetRepository repository, 
+            IScreenPrinter printer)
         {
-            this.widgetRenderer = widgetRenderer;
-            this.widgetRepository = widgetRepository;
-            this.screen = options.Value;
+            this.providers = providers;
+            this.renderer = renderer;
+            this.parser = parser;
+            this.repository = repository;
+            this.printer = printer;
         }
 
         public async Task RefreshAsync()
         {
-            var widgets = this.widgetRepository.GetActiveWidgets();
-            var image = this.widgetRenderer.Render(this.screen, widgets);
-            var path = Path.GetFullPath("img.png");
+            var model = await LoadDataAsync();
+            var widgets = this.repository.GetActiveWidgets();
+            var placements = widgets
+                .Select(x => new WidgetPlacement(this.parser.LoadFromFile(x.Id, model), x))
+                .ToArray();
 
-            using (var file = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using var image = this.renderer.Render(placements);
+
+            this.printer.Print(image);
+        }
+
+        private async Task<CryptoModel> LoadDataAsync()
+        {
+            var model = new CryptoModel();
+
+            foreach (var provider in this.providers)
             {
-                image.CopyTo(file);
+                await provider.EnrichAsync(model);
             }
 
-            Process.Start(new ProcessStartInfo { FileName = path, Verb = "open", UseShellExecute = true });
+            return model;
         }
     }
 }

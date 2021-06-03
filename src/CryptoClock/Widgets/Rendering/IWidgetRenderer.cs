@@ -1,12 +1,15 @@
 ﻿using CryptoClock.Configuration;
 using CryptoClock.Widgets.Rendering.Nodes;
+using System.Collections.Generic;
 using System.IO;
 
 namespace CryptoClock.Widgets.Rendering
 {
     public interface IWidgetRenderer
     {
-        Stream Render(ScreenConfig screen, WidgetNode widget, int width, int height, int columns, int rows);
+        Stream Render(IEnumerable<WidgetPlacement> widgets);
+        
+        Stream Render(WidgetNode widget, int width, int height, int columns, int rows);
     }
 
     public interface IWidgetRenderer<TContext, TResult> : IWidgetRenderer

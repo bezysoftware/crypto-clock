@@ -9,16 +9,16 @@ using System.Linq;
 
 namespace CryptoClock.Widgets.Rendering
 {
-    public class WidgetRenderer : IWidgetRenderer<RenderContext, RenderedResult>
+    public class WidgetRenderer : WidgetRendererBase, IWidgetRenderer<RenderContext, RenderedResult>
     {
         private readonly RenderConfig options;
 
-        public WidgetRenderer(IOptions<RenderConfig> options)
+        public WidgetRenderer(IOptions<RenderConfig> options, IOptions<ScreenConfig> screen) : base(screen)
         {
             this.options = options.Value;
         }
 
-        public Stream Render(ScreenConfig screen, WidgetNode widget, int width, int height, int columns, int rows)
+        public override Stream Render(WidgetNode widget, int width, int height, int columns, int rows)
         {
             var context = new RenderContext(
                 new SKSizeI(width, height),
@@ -28,7 +28,7 @@ namespace CryptoClock.Widgets.Rendering
                     SubpixelText = false,
                     Typeface = SKTypeface.CreateDefault()
                 },
-                screen
+                this.screen
             );
 
             var size = $"{columns}x{rows}";
