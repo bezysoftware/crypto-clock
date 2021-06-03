@@ -8,22 +8,8 @@ namespace CryptoClock.Widgets.Repository
         {
             return new[]
             {
-                new WidgetPlacement
-                {
-                    Id = "Weather",
-                    Left = 0,
-                    Top = 0,
-                    Cols = 4,
-                    Rows = 4
-                },
-                new WidgetPlacement
-                {
-                    Id = "Lightning",
-                    Left = 4,
-                    Top = 2,
-                    Cols = 6,
-                    Rows = 4
-                }
+                new WidgetPlacement("Weather", 0, 0, 4, 4),
+                new WidgetPlacement("Lightning", 4, 2, 6, 4)
             };
         }
 

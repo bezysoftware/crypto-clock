@@ -1,15 +1,11 @@
 ﻿namespace CryptoClock.Widgets
 {
-    public class WidgetPlacement
-    {
-        public string Id { get; init; }
-
-        public int Left { get; init; }
-
-        public int Top { get; init; }
-
-        public int Cols { get; init; }
-
-        public int Rows { get; init; }
+    public record WidgetPlacement(
+        string Id,
+        int Left,
+        int Top,
+        int Cols,
+        int Rows)
+    { 
     }
 }
