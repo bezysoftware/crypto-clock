@@ -1,8 +1,15 @@
-﻿using CryptoClock.Widgets.Rendering.Nodes;
-
-namespace CryptoClock.Widgets
+﻿namespace CryptoClock.Widgets
 {
-    public record WidgetPlacement(WidgetNode Node, Widget Placement)
-    {   
+    public class WidgetPlacement
+    {
+        public string Id { get; init; }
+
+        public int Left { get; init; }
+
+        public int Top { get; init; }
+
+        public int Cols { get; init; }
+
+        public int Rows { get; init; }
     }
 }

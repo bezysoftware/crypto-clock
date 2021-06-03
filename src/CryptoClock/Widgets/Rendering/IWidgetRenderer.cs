@@ -7,7 +7,7 @@ namespace CryptoClock.Widgets.Rendering
 {
     public interface IWidgetRenderer
     {
-        Stream Render(IEnumerable<WidgetPlacement> widgets);
+        Stream Render(IEnumerable<Widget> widgets);
         
         Stream Render(WidgetNode widget, int width, int height, int columns, int rows);
     }

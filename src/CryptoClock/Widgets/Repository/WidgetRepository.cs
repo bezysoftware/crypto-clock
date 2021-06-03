@@ -4,11 +4,11 @@ namespace CryptoClock.Widgets.Repository
 {
     public class WidgetRepository : IWidgetRepository
     {
-        public IEnumerable<Widget> GetActiveWidgets()
+        public IEnumerable<WidgetPlacement> GetActiveWidgets()
         {
             return new[]
             {
-                new Widget
+                new WidgetPlacement
                 {
                     Id = "Weather",
                     Left = 0,
@@ -16,7 +16,7 @@ namespace CryptoClock.Widgets.Repository
                     Cols = 4,
                     Rows = 4
                 },
-                new Widget
+                new WidgetPlacement
                 {
                     Id = "Lightning",
                     Left = 4,

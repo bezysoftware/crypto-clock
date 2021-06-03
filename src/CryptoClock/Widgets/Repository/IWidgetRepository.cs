@@ -4,7 +4,7 @@ namespace CryptoClock.Widgets.Repository
 {
     public interface IWidgetRepository
     {
-        IEnumerable<Widget> GetActiveWidgets();
+        IEnumerable<WidgetPlacement> GetActiveWidgets();
 
         IEnumerable<WidgetPreview> GetAvailableWidgets();
     }

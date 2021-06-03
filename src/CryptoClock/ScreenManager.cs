@@ -37,7 +37,7 @@ namespace CryptoClock
             var model = await LoadDataAsync();
             var widgets = this.repository.GetActiveWidgets();
             var placements = widgets
-                .Select(x => new WidgetPlacement(this.parser.LoadFromFile(x.Id, model), x))
+                .Select(x => new Widget(this.parser.LoadFromFile(x.Id, model), x))
                 .ToArray();
 
             using var image = this.renderer.Render(placements);

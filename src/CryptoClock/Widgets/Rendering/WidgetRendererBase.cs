@@ -16,7 +16,7 @@ namespace CryptoClock.Widgets.Rendering
             this.screen = options.Value;
         }
 
-        public Stream Render(IEnumerable<WidgetPlacement> widgets)
+        public Stream Render(IEnumerable<Widget> widgets)
         {
             var w = this.screen.Width / this.screen.Cols;
             var h = this.screen.Height / this.screen.Rows;
