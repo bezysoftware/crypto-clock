@@ -20,9 +20,11 @@ namespace CryptoClock.Screens
 
         public void Print(Stream stream)
         {
+            using var bitmap = new Bitmap(stream);
+
             this.display.Clear();
             this.display.WaitUntilReady();
-            this.display.DisplayImage(new Bitmap(stream));
+            this.display.DisplayImage(bitmap);
         }
 
         public void Dispose()
