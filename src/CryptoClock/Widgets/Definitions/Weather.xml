@@ -3,7 +3,7 @@
 
     <row>
       <column align="center" width="1">
-        <text align="end" size="large">28° C</text>
+        <text align="end" size="large">{{ Weather.Temperature }} {{ Weather.Units }}</text>
       </column>
       <column align="center" width="1">
         <image align="start" name="raining.png" />

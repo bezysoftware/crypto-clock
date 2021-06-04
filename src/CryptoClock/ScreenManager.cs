@@ -14,20 +14,17 @@ namespace CryptoClock
     {
         private readonly IEnumerable<IDataProvider> providers;
         private readonly IWidgetRenderer renderer;
-        private readonly IWidgetParser parser;
         private readonly IWidgetRepository repository;
         private readonly IScreenPrinter printer;
 
         public ScreenManager(
             IEnumerable<IDataProvider> providers,
-            IWidgetRenderer renderer, 
-            IWidgetParser parser, 
+            IWidgetRenderer renderer,
             IWidgetRepository repository, 
             IScreenPrinter printer)
         {
             this.providers = providers;
             this.renderer = renderer;
-            this.parser = parser;
             this.repository = repository;
             this.printer = printer;
         }
@@ -36,8 +33,9 @@ namespace CryptoClock
         {
             var model = await LoadDataAsync();
             var widgets = this.repository.GetActiveWidgets();
+            var all = this.repository.GetAvailableWidgets().ToArray();
             var placements = widgets
-                .Select(x => new Widget(this.parser.LoadFromFile(x.Id, model), x))
+                .Select(x => new Widget(this.repository.GetParsedWidgetById(x.Id, model), x))
                 .ToArray();
 
             using var image = this.renderer.Render(placements);
@@ -51,7 +49,7 @@ namespace CryptoClock
 
             foreach (var provider in this.providers)
             {
-                await provider.EnrichAsync(model);
+                model = await provider.EnrichAsync(model);
             }
 
             return model;

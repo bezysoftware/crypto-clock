@@ -36,7 +36,6 @@ namespace CryptoClock
                     services.AddSingleton<IDataProvider, WeatherDataProvider>();
                     services.AddSingleton<IWidgetRenderer, WidgetRenderer>();
                     services.AddSingleton<IWidgetRepository, WidgetRepository>();
-                    services.AddSingleton<IWidgetParser, WidgetParser>();
                     services.AddSingleton<ScreenManager>();
 
 #if DEBUG

@@ -3,13 +3,17 @@ using System.Xml.Serialization;
 
 namespace CryptoClock.Widgets.Rendering.Nodes
 {
-    [XmlType("widget")]
-    public class WidgetNode
+    [XmlRoot("widget")]
+    public class WidgetNodeBase
+    {
+        [XmlAttribute("description")]
+        public string Description { get; set; }
+    }
+
+    [XmlRoot("widget")]
+    public class WidgetNode : WidgetNodeBase
     {
         [XmlElement("binding")]
         public List<BindingNode> Bindings { get; set; }
-
-        [XmlElement("description")]
-        public string Description { get; set; }
     }
 }

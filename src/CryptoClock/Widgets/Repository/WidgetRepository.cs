@@ -1,9 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using CryptoClock.Widgets.Rendering.Nodes;
+using Scriban;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace CryptoClock.Widgets.Repository
 {
     public class WidgetRepository : IWidgetRepository
     {
+        private static XmlSerializer BaseSerializer = new XmlSerializer(typeof(WidgetNodeBase));
+        private static XmlSerializer Serializer = new XmlSerializer(typeof(WidgetNode));
+
+        private static string WidgetDefinitionsLocation = "Widgets/Definitions";
+
         public IEnumerable<WidgetPlacement> GetActiveWidgets()
         {
             return new[]
@@ -15,11 +24,29 @@ namespace CryptoClock.Widgets.Repository
 
         public IEnumerable<WidgetPreview> GetAvailableWidgets()
         {
-            return new[]
+            var files = Directory.GetFiles(WidgetDefinitionsLocation, "*.xml");
+
+            foreach (var file in files)
             {
-                new WidgetPreview("Weather", "Description"),
-                new WidgetPreview("Lightning", "Description")
-            };
+                var id = Path.GetFileNameWithoutExtension(file);
+
+                using (var stream = new FileStream(file, FileMode.Open))
+                {
+                    var node = (WidgetNodeBase)BaseSerializer.Deserialize(stream);
+                    yield return new WidgetPreview(id, node.Description);
+                }
+            }
+        }
+
+        public WidgetNode GetParsedWidgetById<T>(string id, T model)
+        {
+            var file = Path.Combine(WidgetDefinitionsLocation, $"{id}.xml");
+            var content = File.ReadAllText(file);
+            var template = Template.Parse(content).Render(model, x => x.Name);
+
+            using var reader = new StringReader(template);
+
+            return (WidgetNode)Serializer.Deserialize(reader);
         }
     }
 }
