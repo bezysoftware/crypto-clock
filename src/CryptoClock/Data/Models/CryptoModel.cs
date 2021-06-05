@@ -13,6 +13,6 @@ namespace CryptoClock.Data.Models
 
         public PriceModel Price { get; init; }
 
-        public IEnumerable<BlockModel> LastBlocks { get; set; }
+        public IEnumerable<BlockModel> LastBlocks { get; init; }
     }
 }

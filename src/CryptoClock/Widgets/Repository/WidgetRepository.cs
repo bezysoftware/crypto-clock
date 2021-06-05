@@ -18,6 +18,7 @@ namespace CryptoClock.Widgets.Repository
             return new[]
             {
                 new WidgetPlacement("Weather", 0, 0, 4, 4),
+                new WidgetPlacement("Time", 5, 0, 2, 2),
                 new WidgetPlacement("Lightning", 4, 2, 6, 4)
             };
         }

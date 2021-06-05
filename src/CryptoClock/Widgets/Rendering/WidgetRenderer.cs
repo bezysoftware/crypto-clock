@@ -206,12 +206,14 @@ namespace CryptoClock.Widgets.Rendering
 
             var maxWidth = results.Max(x => (int?)x.UsedSize.Width) ?? context.AvailableSize.Width;
             var items = results.Count;
-            var spaceY = justify == JustifyContent.Spread && items > 1 ? heightLeft / (float)(items - 1) + this.options.Margin : this.options.Margin;
+            var spaceY = justify == JustifyContent.Spread ? heightLeft / Math.Min(1f, items - 1) + this.options.Margin : this.options.Margin;
             var height = justify == JustifyContent.Start ? context.AvailableSize.Height - heightLeft : context.AvailableSize.Height;
             var offsetY = justify switch
             {
                 JustifyContent.Center => heightLeft / 2,
                 JustifyContent.End => heightLeft,
+                JustifyContent.Spread 
+                    when items == 1 => heightLeft / 2,
                 _ => 0f
             };
 
