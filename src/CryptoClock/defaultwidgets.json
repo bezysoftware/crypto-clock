@@ -1,0 +1,41 @@
+[
+  {
+    "Id": "Weather",
+    "Placement": {
+      "Left": 0,
+      "Top": 0,
+      "Cols": 4,
+      "Rows": 4
+    },
+    "Background": "#FFF",
+    "Foreground": "#000",
+    "Data": {
+    }
+  },
+  {
+    "Id": "Time",
+    "Placement": {
+      "Left": 5,
+      "Top": 0,
+      "Cols": 2,
+      "Rows": 2
+    },
+    "Background": "#FFF",
+    "Foreground": "#000",
+    "Data": {
+    }
+  },
+  {
+    "Id": "Lightning",
+    "Placement": {
+      "Left": 4,
+      "Top": 2,
+      "Cols": 6,
+      "Rows": 4
+    },
+    "Background": "#FFF",
+    "Foreground": "#000",
+    "Data": {
+    }
+  }
+]

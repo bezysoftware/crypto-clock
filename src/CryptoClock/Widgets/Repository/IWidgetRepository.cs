@@ -5,10 +5,10 @@ namespace CryptoClock.Widgets.Repository
 {
     public interface IWidgetRepository
     {
-        IEnumerable<WidgetPlacement> GetActiveWidgets();
+        IEnumerable<WidgetConfig> GetActiveWidgets();
 
         IEnumerable<WidgetPreview> GetAvailableWidgets();
 
-        WidgetNode GetParsedWidgetById<T>(string id, T model);
+        WidgetNode GetParsedWidgetById<T>(WidgetConfig config, T model);
     }
 }

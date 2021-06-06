@@ -18,7 +18,7 @@ namespace CryptoClock.Widgets.Rendering
             this.options = options.Value;
         }
 
-        public override Stream Render(WidgetNode widget, int width, int height, int columns, int rows)
+        public override Stream Render(Widget widget, int width, int height, int columns, int rows)
         {
             var context = new RenderContext(
                 new SKSizeI(width, height),
@@ -26,13 +26,15 @@ namespace CryptoClock.Widgets.Rendering
                 {
                     IsAntialias = false,
                     SubpixelText = false,
-                    Typeface = SKTypeface.CreateDefault()
+                    Typeface = SKTypeface.CreateDefault(),
+                    Color = SKColor.Parse(widget.Config.Foreground)
                 },
-                this.screen
+                this.screen,
+                SKColor.Parse(widget.Config.Background)
             );
 
             var size = $"{columns}x{rows}";
-            var b = widget.Bindings.First(x => x.Sizes.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(s => s == size));
+            var b = widget.Node.Bindings.First(x => x.Sizes.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(s => s == size));
 
             return b.Render(context, this).Image.Encode(SKEncodedImageFormat.Png, 100).AsStream();
         }
@@ -43,8 +45,7 @@ namespace CryptoClock.Widgets.Rendering
             var info = new SKImageInfo(context.AvailableSize.Width, context.AvailableSize.Height);
             using var surface = SKSurface.Create(info);
 
-            surface.Canvas.Clear(SKColor.Parse(binding.Background));
-            context.Paint.Color = SKColor.Parse(binding.Foreground);
+            surface.Canvas.Clear(context.Background);
 
             ApplyFontPaint(binding, context, context.Paint);
 
@@ -206,7 +207,7 @@ namespace CryptoClock.Widgets.Rendering
 
             var maxWidth = results.Max(x => (int?)x.UsedSize.Width) ?? context.AvailableSize.Width;
             var items = results.Count;
-            var spaceY = justify == JustifyContent.Spread ? heightLeft / Math.Min(1f, items - 1) + this.options.Margin : this.options.Margin;
+            var spaceY = justify == JustifyContent.Spread ? heightLeft / Math.Max(1f, items - 1) + this.options.Margin : this.options.Margin;
             var height = justify == JustifyContent.Start ? context.AvailableSize.Height - heightLeft : context.AvailableSize.Height;
             var offsetY = justify switch
             {

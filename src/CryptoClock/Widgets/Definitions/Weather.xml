@@ -1,9 +1,9 @@
 ﻿<widget description="Shows current weather">
-  <binding sizes="4x2,5x2,4x4" justify="spread" background="#eee" foreground="#000">
+  <binding sizes="4x2,5x2,4x4" justify="spread">
 
     <row>
       <column align="center" width="1">
-        <text align="end" size="large">{{ Weather.Temperature }} {{ Weather.Units }}</text>
+        <text align="end" size="large">{{ Model.Weather.Temperature }} {{ Model.Weather.Units }}</text>
       </column>
       <column align="center" width="1">
         <image align="start" name="raining.png" />

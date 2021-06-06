@@ -1,7 +1,11 @@
 ﻿using CryptoClock.Widgets.Rendering.Nodes;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Scriban;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace CryptoClock.Widgets.Repository
@@ -12,15 +16,37 @@ namespace CryptoClock.Widgets.Repository
         private static XmlSerializer Serializer = new XmlSerializer(typeof(WidgetNode));
 
         private static string WidgetDefinitionsLocation = "Widgets/Definitions";
+        private static string WidgetConfigsFileName = "CryptoClock/Widgets.json";
+        private static string WidgetConfigsDefaultFileName = "defaultwidgets.json";
+        
+        private readonly ILogger<WidgetRepository> log;
 
-        public IEnumerable<WidgetPlacement> GetActiveWidgets()
+        public WidgetRepository(ILogger<WidgetRepository> log)
         {
-            return new[]
+            this.log = log;
+        }
+
+        public IEnumerable<WidgetConfig> GetActiveWidgets()
+        {
+            var appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var file = Path.Combine(appdata, WidgetConfigsFileName);
+
+            try
             {
-                new WidgetPlacement("Weather", 0, 0, 4, 4),
-                new WidgetPlacement("Time", 5, 0, 2, 2),
-                new WidgetPlacement("Lightning", 4, 2, 6, 4)
-            };
+                return ReadConfigFile(file);
+            }
+            catch (FileNotFoundException)
+            {
+                // copy default config to appdata folder
+                Directory.CreateDirectory(Path.GetDirectoryName(file));
+                File.Copy(WidgetConfigsDefaultFileName, file);
+                return ReadConfigFile(file);
+            }
+            catch(Exception ex)
+            {
+                this.log.LogError(ex, $"Couldn't read widget configs from {file}");
+                return Enumerable.Empty<WidgetConfig>();
+            }
         }
 
         public IEnumerable<WidgetPreview> GetAvailableWidgets()
@@ -39,15 +65,22 @@ namespace CryptoClock.Widgets.Repository
             }
         }
 
-        public WidgetNode GetParsedWidgetById<T>(string id, T model)
+        public WidgetNode GetParsedWidgetById<T>(WidgetConfig config, T model)
         {
-            var file = Path.Combine(WidgetDefinitionsLocation, $"{id}.xml");
+            var file = Path.Combine(WidgetDefinitionsLocation, $"{config.Id}.xml");
             var content = File.ReadAllText(file);
-            var template = Template.Parse(content).Render(model, x => x.Name);
+            var template = Template.Parse(content).Render(new { Model = model, Config = config }, x => x.Name);
 
             using var reader = new StringReader(template);
 
             return (WidgetNode)Serializer.Deserialize(reader);
+        }
+
+        private static IEnumerable<WidgetConfig> ReadConfigFile(string file)
+        {
+            var data = File.ReadAllText(file);
+
+            return JsonConvert.DeserializeObject<WidgetConfig[]>(data) ?? Enumerable.Empty<WidgetConfig>();
         }
     }
 }

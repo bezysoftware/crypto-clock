@@ -1,5 +1,4 @@
 ﻿using CryptoClock.Configuration;
-using CryptoClock.Widgets.Rendering.Nodes;
 using Microsoft.Extensions.Options;
 using SkiaSharp;
 using System.Collections.Generic;
@@ -24,7 +23,7 @@ namespace CryptoClock.Widgets.Rendering
 
             foreach (var widget in widgets)
             {
-                using (var result = Render(widget.Node, widget.Placement.Cols * w, widget.Placement.Rows * h, widget.Placement.Cols, widget.Placement.Rows))
+                using (var result = Render(widget, widget.Placement.Cols * w, widget.Placement.Rows * h, widget.Placement.Cols, widget.Placement.Rows))
                 {
                     surface.Canvas.DrawImage(SKImage.FromEncodedData(result), new SKPoint(widget.Placement.Left * w, widget.Placement.Top * h));
                 }
@@ -33,6 +32,6 @@ namespace CryptoClock.Widgets.Rendering
             return surface.Snapshot().Encode(SKEncodedImageFormat.Png, 100).AsStream();
         }
 
-        public abstract Stream Render(WidgetNode widget, int width, int height, int columns, int rows);
+        public abstract Stream Render(Widget widget, int width, int height, int columns, int rows);
     }
 }

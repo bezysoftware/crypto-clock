@@ -35,7 +35,7 @@ namespace CryptoClock
             var widgets = this.repository.GetActiveWidgets();
             var all = this.repository.GetAvailableWidgets().ToArray();
             var placements = widgets
-                .Select(x => new Widget(this.repository.GetParsedWidgetById(x.Id, model), x))
+                .Select(x => new Widget(this.repository.GetParsedWidgetById(x, model), x))
                 .ToArray();
 
             using var image = this.renderer.Render(placements);

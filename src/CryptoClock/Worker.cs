@@ -2,19 +2,20 @@ using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace CryptoClock
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> logger;
+        private readonly ILogger<Worker> log;
         private readonly ScreenManager manager;
 
         public Worker(
-            ILogger<Worker> logger, 
+            ILogger<Worker> log, 
             ScreenManager manager)
         {
-            this.logger = logger;
+            this.log = log;
             this.manager = manager;
         }
 
@@ -22,7 +23,15 @@ namespace CryptoClock
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await this.manager.RefreshAsync();                
+                try
+                {
+                    await this.manager.RefreshAsync();
+                } 
+                catch(Exception ex)
+                {
+                    this.log.LogError(ex, "Exception during Worker execution");
+                }
+
                 await Task.Delay(60_000, stoppingToken);
             }
         }

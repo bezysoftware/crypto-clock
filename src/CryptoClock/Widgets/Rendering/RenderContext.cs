@@ -7,7 +7,8 @@ namespace CryptoClock.Widgets.Rendering
     public record RenderContext(
         SKSizeI AvailableSize,
         SKPaint Paint,
-        ScreenConfig Screen)
+        ScreenConfig Screen,
+        SKColor Background)
     {
         public int GetFontSize(FontSize fontSize)
         {

@@ -1,5 +1,5 @@
-﻿<widget description="Shows overview of your lightning nodes">
-  <binding sizes="4x2,6x4" justify="start" background="#eee" foreground="#000">
+﻿<widget description="Shows overview of your lightning channels">
+  <binding sizes="4x2,6x4" justify="start">
 
     <block>
       <row>
