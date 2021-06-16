@@ -60,7 +60,7 @@ namespace CryptoClock.Data
                 return null;
             }
 
-            var appdata = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CryptoClock");
+            var appdata = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Consts.SettingsFolderName);
             var imagePath = Path.Combine(appdata, $"{icon}.png");
 
             if (File.Exists(imagePath))

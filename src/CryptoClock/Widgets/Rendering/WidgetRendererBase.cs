@@ -8,18 +8,22 @@ namespace CryptoClock.Widgets.Rendering
 {
     public abstract class WidgetRendererBase : IWidgetRenderer
     {
-        protected readonly ScreenConfig screen;
+        protected readonly ScreenConfig screenConfig;
+        protected readonly RenderConfig renderConfig;
 
-        public WidgetRendererBase(IOptions<ScreenConfig> options)
+        public WidgetRendererBase(IOptions<RenderConfig> renderOptions, IOptions<ScreenConfig> screenOptions)
         {
-            this.screen = options.Value;
+            this.screenConfig = screenOptions.Value;
+            this.renderConfig = renderOptions.Value;
         }
 
         public Stream Render(IEnumerable<Widget> widgets)
         {
-            var w = this.screen.Width / this.screen.Cols;
-            var h = this.screen.Height / this.screen.Rows;
-            var surface = SKSurface.Create(new SKImageInfo(screen.Width, screen.Height));
+            var w = this.screenConfig.Width / this.screenConfig.Cols;
+            var h = this.screenConfig.Height / this.screenConfig.Rows;
+            var surface = SKSurface.Create(new SKImageInfo(screenConfig.Width, screenConfig.Height));
+
+            surface.Canvas.Clear(SKColor.Parse(this.renderConfig.Background));
 
             foreach (var widget in widgets)
             {

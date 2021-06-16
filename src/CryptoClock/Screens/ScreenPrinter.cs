@@ -22,8 +22,6 @@ namespace CryptoClock.Screens
         {
             using var bitmap = new Bitmap(stream);
 
-            this.display.Clear();
-            this.display.WaitUntilReady();
             this.display.DisplayImage(bitmap);
         }
 

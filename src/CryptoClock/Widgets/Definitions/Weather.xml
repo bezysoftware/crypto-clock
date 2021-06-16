@@ -5,9 +5,9 @@
       <column align="center" width="1">
         <text align="end" size="large">{{ Model.Weather.Temperature }} {{ Model.Weather.Units }}</text>
       </column>
-      <column align="center" width="1">
+      <!--<column align="center" width="1">
         <image align="start" name="raining.png" />
-      </column>
+      </column>-->
     </row>
 
     <line size="xsmall" foreground="#aaa" />
@@ -15,17 +15,17 @@
     <row>
       <column>
         <text size="small" align="center">Tue</text>
-        <image align="center" name="sunny.png" />
+        <!--<image align="center" name="sunny.png" />-->
         <text align="center">30° C</text>
       </column>
       <column>
         <text size="small" align="center">Wed</text>
-        <image align="center" name="raining.png" />
+        <!--<image align="center" name="raining.png" />-->
         <text align="center">10° C</text>
       </column>
       <column>
         <text size="small" align="center">Thu</text>
-        <image align="center" name="cloudy.png" />
+        <!--<image align="center" name="cloudy.png" />-->
         <text align="center">20° C</text>
       </column>
     </row>

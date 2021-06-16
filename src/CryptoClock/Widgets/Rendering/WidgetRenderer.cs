@@ -1,5 +1,6 @@
 ﻿using CryptoClock.Configuration;
 using CryptoClock.Widgets.Rendering.Nodes;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SkiaSharp;
 using System;
@@ -11,11 +12,14 @@ namespace CryptoClock.Widgets.Rendering
 {
     public class WidgetRenderer : WidgetRendererBase, IWidgetRenderer<RenderContext, RenderedResult>
     {
-        private readonly RenderConfig options;
+        private readonly ILogger<WidgetRenderer> log;
 
-        public WidgetRenderer(IOptions<RenderConfig> options, IOptions<ScreenConfig> screen) : base(screen)
+        public WidgetRenderer(
+            IOptions<RenderConfig> options, 
+            IOptions<ScreenConfig> screen,
+            ILogger<WidgetRenderer> log) : base(options, screen)
         {
-            this.options = options.Value;
+            this.log = log;
         }
 
         public override Stream Render(Widget widget, int width, int height, int columns, int rows)
@@ -26,10 +30,10 @@ namespace CryptoClock.Widgets.Rendering
                 {
                     IsAntialias = false,
                     SubpixelText = false,
-                    Typeface = SKTypeface.CreateDefault(),
+                    Typeface = FontLoader.LoadTypeface(this.renderConfig.DefaultFont, SKFontStyleWeight.Normal),
                     Color = SKColor.Parse(widget.Config.Foreground)
                 },
-                this.screen,
+                this.screenConfig,
                 SKColor.Parse(widget.Config.Background)
             );
 
@@ -41,7 +45,7 @@ namespace CryptoClock.Widgets.Rendering
 
         public RenderedResult Render(RenderContext context, BindingNode binding)
         {
-            var edge = this.options.Margin * 2;
+            var edge = this.renderConfig.Margin * 2;
             var info = new SKImageInfo(context.AvailableSize.Width, context.AvailableSize.Height);
             using var surface = SKSurface.Create(info);
 
@@ -55,7 +59,7 @@ namespace CryptoClock.Widgets.Rendering
             };
             var result = Render(ctx, binding, binding.Justify);
 
-            surface.Canvas.DrawImage(result.Image, new SKPoint(this.options.Margin, this.options.Margin));
+            surface.Canvas.DrawImage(result.Image, new SKPoint(this.renderConfig.Margin, this.renderConfig.Margin));
 
             return new RenderedResult(surface.Snapshot(), context.AvailableSize);
         }
@@ -125,8 +129,9 @@ namespace CryptoClock.Widgets.Rendering
         {
             var bounds = new SKRect();
             var paint = ApplyFontPaint(text, context, context.Paint.Clone());
+
             paint.MeasureText(text.Text.AsSpan(), ref bounds);
-            
+
             var height = (int)bounds.Size.Height;
             var width = (int)Math.Round(bounds.Right);
             var info = new SKImageInfo(width, height);
@@ -146,7 +151,7 @@ namespace CryptoClock.Widgets.Rendering
 
         public RenderedResult Render(RenderContext context, ImageNode image)
         {
-            var file = Path.Combine(this.options.ImagesLocation, image.Name);
+            var file = Path.Combine(this.renderConfig.ImagesLocation, image.Name);
 
             using var bitmap = SKBitmap.Decode(file);
 
@@ -200,14 +205,14 @@ namespace CryptoClock.Widgets.Rendering
                 var result = e.Render(ctx, this);
 
                 results.Add(result);
-                heightLeft -= result.UsedSize.Height + this.options.Margin;
+                heightLeft -= result.UsedSize.Height + this.renderConfig.Margin;
             }
 
-            heightLeft += this.options.Margin; // last item doesn't consume margin
+            heightLeft += this.renderConfig.Margin; // last item doesn't consume margin
 
             var maxWidth = results.Max(x => (int?)x.UsedSize.Width) ?? context.AvailableSize.Width;
             var items = results.Count;
-            var spaceY = justify == JustifyContent.Spread ? heightLeft / Math.Max(1f, items - 1) + this.options.Margin : this.options.Margin;
+            var spaceY = justify == JustifyContent.Spread ? heightLeft / Math.Max(1f, items - 1) + this.renderConfig.Margin : this.renderConfig.Margin;
             var height = justify == JustifyContent.Start ? context.AvailableSize.Height - heightLeft : context.AvailableSize.Height;
             var offsetY = justify switch
             {
@@ -245,11 +250,7 @@ namespace CryptoClock.Widgets.Rendering
                     ? Enum.Parse<SKFontStyleWeight>(node.FontWeight, true)
                     : (SKFontStyleWeight)paint.Typeface.FontWeight;
 
-                paint.Typeface = SKTypeface.FromFamilyName(
-                    font,
-                    weight,
-                    SKFontStyleWidth.Normal,
-                    SKFontStyleSlant.Upright);
+                paint.Typeface = FontLoader.LoadTypeface(font, weight);
             }
 
             return paint;

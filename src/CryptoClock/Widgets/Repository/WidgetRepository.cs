@@ -16,7 +16,7 @@ namespace CryptoClock.Widgets.Repository
         private static XmlSerializer Serializer = new XmlSerializer(typeof(WidgetNode));
 
         private static string WidgetDefinitionsLocation = "Widgets/Definitions";
-        private static string WidgetConfigsFileName = "CryptoClock/Widgets.json";
+        private static string WidgetConfigsFileName = $"{Consts.SettingsFolderName}/Widgets.json";
         private static string WidgetConfigsDefaultFileName = "defaultwidgets.json";
         
         private readonly ILogger<WidgetRepository> log;
@@ -35,9 +35,10 @@ namespace CryptoClock.Widgets.Repository
             {
                 return ReadConfigFile(file);
             }
-            catch (FileNotFoundException)
+            catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
             {
                 // copy default config to appdata folder
+                this.log.LogDebug($"Settings file '{file}' doesn't exist yet, copying over default.");
                 Directory.CreateDirectory(Path.GetDirectoryName(file));
                 File.Copy(WidgetConfigsDefaultFileName, file);
                 return ReadConfigFile(file);
