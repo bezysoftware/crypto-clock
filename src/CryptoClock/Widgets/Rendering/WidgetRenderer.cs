@@ -1,5 +1,6 @@
 ﻿using CryptoClock.Configuration;
 using CryptoClock.Widgets.Rendering.Nodes;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SkiaSharp;
@@ -12,13 +13,16 @@ namespace CryptoClock.Widgets.Rendering
 {
     public class WidgetRenderer : WidgetRendererBase, IWidgetRenderer<RenderContext, RenderedResult>
     {
+        private readonly IMemoryCache cache;
         private readonly ILogger<WidgetRenderer> log;
 
         public WidgetRenderer(
             IOptions<RenderConfig> options, 
             IOptions<ScreenConfig> screen,
+            IMemoryCache cache,
             ILogger<WidgetRenderer> log) : base(options, screen)
         {
+            this.cache = cache;
             this.log = log;
         }
 
@@ -30,7 +34,7 @@ namespace CryptoClock.Widgets.Rendering
                 {
                     IsAntialias = false,
                     SubpixelText = false,
-                    Typeface = FontLoader.LoadTypeface(this.renderConfig.DefaultFont, SKFontStyleWeight.Normal),
+                    Typeface = LoadTypeface(this.renderConfig.DefaultFont, SKFontStyleWeight.Normal),
                     Color = SKColor.Parse(widget.Config.Foreground)
                 },
                 this.screenConfig,
@@ -250,10 +254,15 @@ namespace CryptoClock.Widgets.Rendering
                     ? Enum.Parse<SKFontStyleWeight>(node.FontWeight, true)
                     : (SKFontStyleWeight)paint.Typeface.FontWeight;
 
-                paint.Typeface = FontLoader.LoadTypeface(font, weight);
+                paint.Typeface = LoadTypeface(font, weight);
             }
 
             return paint;
+        }
+
+        private SKTypeface LoadTypeface(string name, SKFontStyleWeight weight)
+        {
+            return this.cache.GetOrCreate((name, weight), x => FontLoader.LoadTypeface(name, weight));
         }
 
         private static int GetPosition(Align align, int availableSize, int usedSize)

@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.15.8" />
     <PackageReference Include="Grpc.Net.Client" Version="2.36.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
@@ -34,16 +35,19 @@
     <None Update="Widgets\Definitions\*.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+
+    <None Update="Widgets\Rendering\Fonts\*.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Widgets\Rendering\Fonts\*.ttf" />
+    <None Update="appsettings.Development.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+    </None>
   </ItemGroup>
 
 </Project>

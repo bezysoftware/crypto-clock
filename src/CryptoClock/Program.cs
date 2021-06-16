@@ -38,13 +38,17 @@ namespace CryptoClock
                     services.AddSingleton<IWidgetRepository, WidgetRepository>();
                     services.AddSingleton<ScreenManager>();
 
-#if DEBUG
-                    services.AddSingleton<IScreenPrinter, DebugScreenPrinter>();
-#else
-                    services.AddSingleton<IScreenPrinter, ScreenPrinter>();
-#endif
+                    if (context.HostingEnvironment.IsDevelopment())
+                    {
+                        services.AddSingleton<IScreenPrinter, DebugScreenPrinter>();
+                    }
+                    else
+                    {
+                        services.AddSingleton<IScreenPrinter, ScreenPrinter>();
+                    }
 
                     services.AddHttpClient();
+                    services.AddMemoryCache();
                     services.AddHostedService<Worker>();
                 });
     }
