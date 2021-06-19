@@ -2,6 +2,7 @@
 {
     public static class Consts
     {
-        public static string SettingsFolderName = "CryptoClockSettings";
+        public static string DataFolderName = $"{nameof(CryptoClock)}Data";
+        public static string ImagesFolderName = $"{DataFolderName}/Images";
     }
 }

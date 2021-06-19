@@ -16,7 +16,7 @@ namespace CryptoClock.Widgets.Repository
         private static XmlSerializer Serializer = new XmlSerializer(typeof(WidgetNode));
 
         private static string WidgetDefinitionsLocation = "Widgets/Definitions";
-        private static string WidgetConfigsFileName = $"{Consts.SettingsFolderName}/Widgets.json";
+        private static string WidgetConfigsFileName = $"{Consts.DataFolderName}/Widgets.json";
         private static string WidgetConfigsDefaultFileName = "defaultwidgets.json";
         
         private readonly ILogger<WidgetRepository> log;

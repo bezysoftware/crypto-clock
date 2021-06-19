@@ -5,9 +5,9 @@
       <column align="center" width="1">
         <text align="end" size="large">{{ Model.Weather.Temperature }} {{ Model.Weather.Units }}</text>
       </column>
-      <!--<column align="center" width="1">
-        <image align="start" name="raining.png" />
-      </column>-->
+      <column align="center" width="1">
+        <image align="start" name="{{ Model.Weather.Image }}" />
+      </column>
     </row>
 
     <line size="xsmall" foreground="#aaa" />

@@ -137,7 +137,7 @@ namespace CryptoClock.Widgets.Rendering
             paint.MeasureText(text.Text.AsSpan(), ref bounds);
 
             var height = (int)bounds.Size.Height;
-            var width = (int)Math.Round(bounds.Right);
+            var width = (int)Math.Ceiling(bounds.Right);
             var info = new SKImageInfo(width, height);
             
             using var surface = SKSurface.Create(info);
@@ -155,9 +155,7 @@ namespace CryptoClock.Widgets.Rendering
 
         public RenderedResult Render(RenderContext context, ImageNode image)
         {
-            var file = Path.Combine(this.renderConfig.ImagesLocation, image.Name);
-
-            using var bitmap = SKBitmap.Decode(file);
+            using var bitmap = SKBitmap.Decode(image.Name);
 
             var width = context.AvailableSize.Width / 2;
             var scale = (float)width / bitmap.Width;
