@@ -3,10 +3,10 @@
 
     <row>
       <column align="center" width="1">
-        <text align="end" size="large">{{ Model.Weather.Temperature }} {{ Model.Weather.Units }}</text>
+        <text align="end" size="large">{{ Model.Weather.Current.TemperatureHigh }} {{ Model.Weather.Units }}</text>
       </column>
       <column align="center" width="1">
-        <image align="start" name="{{ Model.Weather.Image }}" />
+        <image align="start" name="{{ Model.Weather.Current.Image }}" />
       </column>
     </row>
 

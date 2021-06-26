@@ -32,14 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Widgets\Definitions\*.xml">
+    <None Update="Assets\**\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="*.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-
-    <None Update="Widgets\Rendering\Fonts\*.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

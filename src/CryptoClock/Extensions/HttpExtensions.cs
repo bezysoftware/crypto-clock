@@ -1,5 +1,5 @@
+using Newtonsoft.Json;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CryptoClock.Extensions
@@ -10,7 +10,7 @@ namespace CryptoClock.Extensions
         {
             var response = await httpClient.GetStringAsync(requestUri);
 
-            return JsonSerializer.Deserialize<T>(response);
+            return JsonConvert.DeserializeObject<T>(response);
         }
     }
 }

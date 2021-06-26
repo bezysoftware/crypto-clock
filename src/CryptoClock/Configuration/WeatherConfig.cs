@@ -4,10 +4,10 @@ namespace CryptoClock.Configuration
 {
     public class WeatherConfig
     {
-        public string OpenWeatherMapApiKey { get; set; }
+        public string WeatherApiKey { get; init; }
 
-        public string Location { get; set; }
+        public string Location { get; init; }
         
-        public WeatherUnits Units { get; set; }
+        public WeatherUnits Units { get; init; }
     }
 }

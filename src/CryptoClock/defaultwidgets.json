@@ -7,8 +7,8 @@
       "Cols": 4,
       "Rows": 4
     },
-    "Background": "#FFF",
-    "Foreground": "#000",
+    "Background": "#000",
+    "Foreground": "#FFF",
     "Data": {
     }
   },

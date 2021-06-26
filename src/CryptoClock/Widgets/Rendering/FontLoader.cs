@@ -5,7 +5,7 @@ namespace CryptoClock.Widgets.Rendering
 {
     public static class FontLoader
     {
-        private static string WidgetDefinitionsLocation = "Widgets/Rendering/Fonts/{0}.ttf";
+        private static string WidgetDefinitionsLocation = "Assets/Fonts/{0}.ttf";
         
         public static SKTypeface LoadTypeface(string name, SKFontStyleWeight weight)
         {

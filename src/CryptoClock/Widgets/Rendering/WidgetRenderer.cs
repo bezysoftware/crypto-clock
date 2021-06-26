@@ -160,11 +160,28 @@ namespace CryptoClock.Widgets.Rendering
             var width = context.AvailableSize.Width / 2;
             var scale = (float)width / bitmap.Width;
             var info = new SKImageInfo(context.AvailableSize.Width, (int)(bitmap.Height * scale));
+            
+            var paint = context.Paint.Clone();
+
+            if (paint.Color == SKColors.White)
+            {
+                // images are black, if foreground should be white, use invert matrix
+                var invertMatrix = new[]
+                {
+                    -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+                    0.0f,  -1.0f,  0.0f,  1.0f,  0.0f,
+                    0.0f,  0.0f,  -1.0f,  1.0f,  0.0f,
+                    1.0f,  1.0f,  1.0f,  1.0f,  0.0f
+                };
+
+                paint.ColorFilter = SKColorFilter.CreateColorMatrix(invertMatrix);
+            }
 
             using var surface = SKSurface.Create(info);
 
             surface.Canvas.Scale(scale);
-            surface.Canvas.DrawBitmap(bitmap, bitmap.Width / 2, 0, context.Paint);
+            context.Paint.BlendMode = SKBlendMode.Overlay;
+            surface.Canvas.DrawBitmap(bitmap, bitmap.Width / 2, 0, paint);
 
             return new RenderedResult(surface.Snapshot(), info.Size);
         }
