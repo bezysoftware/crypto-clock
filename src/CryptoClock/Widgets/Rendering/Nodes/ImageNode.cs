@@ -8,6 +8,9 @@ namespace CryptoClock.Widgets.Rendering.Nodes
         [XmlAttribute("name")]
         public string Name { get; set; }
 
+        [XmlAttribute("spacing")]
+        public Spacing Spacing { get; set; }
+
         public override TResult Render<TContext, TResult>(TContext context, IWidgetRenderer<TContext, TResult> renderer)
         {
             return renderer.Render(context, this);

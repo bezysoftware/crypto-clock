@@ -15,7 +15,7 @@ namespace CryptoClock.Data.Models
 
     public class WeatherData
     {
-        public DateTime Date { get; set; }
+        public DateTime Timestamp { get; set; }
 
         public int TemperatureLow { get; init; }
 

@@ -1,34 +1,34 @@
 ﻿<widget description="Shows current weather">
-  <binding sizes="4x2,5x2,4x4" justify="spread">
+  <binding sizes="4x2,5x2,4x4,4x3" justify="spread">
 
     <row>
-      <column align="center" width="1">
-        <text align="end" size="large">{{ Model.Weather.Current.TemperatureHigh }} {{ Model.Weather.Units }}</text>
+      <column align="center" width="3">
+        <image align="end" name="{{ Model.Weather.Current.Image }}" />
       </column>
-      <column align="center" width="1">
-        <image align="start" name="{{ Model.Weather.Current.Image }}" />
+      <column align="center" width="4">
+        <text align="center" size="large">{{ Model.Weather.Current.TemperatureHigh }} {{ Model.Weather.Units }}</text>
       </column>
     </row>
 
-    <line size="xsmall" foreground="#aaa" />
-
     <row>
-      <column>
-        <text size="small" align="center">Tue</text>
-        <!--<image align="center" name="sunny.png" />-->
-        <text align="center">30° C</text>
+      <column width="6" />
+      <column width="1" align="center">
+        <image align="end" name="Assets/Weather/Location.png" />
       </column>
-      <column>
-        <text size="small" align="center">Wed</text>
-        <!--<image align="center" name="raining.png" />-->
-        <text align="center">10° C</text>
-      </column>
-      <column>
-        <text size="small" align="center">Thu</text>
-        <!--<image align="center" name="cloudy.png" />-->
-        <text align="center">20° C</text>
+      <column width="8" align="end">
+        <text align="start" size="xsmall" weight="bold">{{ Model.Weather.Location }}</text>
       </column>
     </row>
     
+    <row>
+      {{ for i in 0..2 }}
+      <column>
+        <text size="small" align="center">{{ Model.Weather.Forecast[i].Timestamp | date.to_string '%a' }}</text>
+        <image align="center" name="{{ Model.Weather.Forecast[i].Image }}" />
+        <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureLow }}-{{ Model.Weather.Forecast[i].TemperatureHigh }} {{ Model.Weather.Units }}</text>
+      </column>
+      {{ end }}
+    </row>
+
   </binding>
 </widget>

@@ -17,7 +17,7 @@ namespace CryptoClock.Data
     public class WeatherDataProvider : IDataProvider
     {
         private const string WeatherApiUrl = "https://api.weatherapi.com/v1/forecast.json?key={0}&q={1}&days={2}&aqi=no&alerts=no";
-        private const int ForecastDays = 5;
+        private const int ForecastDays = 3;
         private const string CacheKey = "WeatherCacheKey";
         private static readonly TimeSpan CacheExpiration = TimeSpan.FromHours(3);
 
@@ -42,7 +42,7 @@ namespace CryptoClock.Data
                 return this.http.GetObjectAsync<Weather>(string.Format(WeatherApiUrl, c.WeatherApiKey, c.Location, ForecastDays));
             });
 
-            var unit = c.Units switch
+            var units = c.Units switch
             {
                 WeatherUnits.Imperial => "°F",
                 WeatherUnits.Metric => "°C",
@@ -54,20 +54,20 @@ namespace CryptoClock.Data
 
             var result = new WeatherModel
             {
-                Units = unit,
+                Units = units,
                 Location = c.Location,
                 Current = new WeatherData
                 {
-                    Date = now.time,
+                    Timestamp = now.time,
                     TemperatureHigh = GetTemperature(c.Units, now.temp_c, now.temp_f),
                     TemperatureLow = GetTemperature(c.Units, now.temp_c, now.temp_f),
                     Image = GetImagePath(now.is_day == 1, now.condition.code)
                 },
                 Forecast = weather.forecast.forecastday
-                        .SkipWhile(x => x.date.Date == DateTime.UtcNow.Date)
+                        .SkipWhile(x => x.date.Date < DateTime.UtcNow.Date)
                         .Select(x => new WeatherData
                         {
-                            Date = x.date,
+                            Timestamp = x.date,
                             TemperatureHigh = GetTemperature(c.Units, today.day.maxtemp_c, today.day.maxtemp_f),
                             TemperatureLow = GetTemperature(c.Units, today.day.mintemp_c, today.day.mintemp_f),
                             Image = GetImagePath(true, x.day.condition.code)

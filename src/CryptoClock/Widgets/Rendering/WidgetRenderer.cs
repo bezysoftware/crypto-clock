@@ -157,8 +157,15 @@ namespace CryptoClock.Widgets.Rendering
         {
             using var bitmap = SKBitmap.Decode(image.Name);
 
-            var width = context.AvailableSize.Width / 2;
-            var scale = (float)width / bitmap.Width;
+            var coef = image.Spacing switch
+            {
+                Spacing.None => 1f,
+                Spacing.Regular => 2f,
+                _ => 2f
+            };
+
+            var width = context.AvailableSize.Width / coef;
+            var scale = width / bitmap.Width;
             var info = new SKImageInfo(context.AvailableSize.Width, (int)(bitmap.Height * scale));
             
             var paint = context.Paint.Clone();
@@ -180,8 +187,7 @@ namespace CryptoClock.Widgets.Rendering
             using var surface = SKSurface.Create(info);
 
             surface.Canvas.Scale(scale);
-            context.Paint.BlendMode = SKBlendMode.Overlay;
-            surface.Canvas.DrawBitmap(bitmap, bitmap.Width / 2, 0, paint);
+            surface.Canvas.DrawBitmap(bitmap, bitmap.Width - bitmap.Width / coef, 0, paint);
 
             return new RenderedResult(surface.Snapshot(), info.Size);
         }

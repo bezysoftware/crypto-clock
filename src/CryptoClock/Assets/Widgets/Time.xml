@@ -1,5 +1,5 @@
 ﻿<widget description="Displays date and time">
-  <binding sizes="2x2" justify="spread">
+  <binding sizes="4x2" justify="spread">
 
     <text align="center" size="large">{{ Model.DateTime | date.to_string '%D' }}</text>      
 
