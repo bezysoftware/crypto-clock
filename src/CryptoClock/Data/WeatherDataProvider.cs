@@ -52,27 +52,24 @@ namespace CryptoClock.Data
             var today = weather.forecast.forecastday.First(x => x.date.Date == DateTime.UtcNow.Date);
             var now = today.hour.First(x => x.time.Hour >= DateTime.UtcNow.Hour);
 
-            var result = new WeatherModel
-            {
-                Units = units,
-                Location = c.Location,
-                Current = new WeatherData
-                {
-                    Timestamp = now.time,
-                    TemperatureHigh = GetTemperature(c.Units, now.temp_c, now.temp_f),
-                    TemperatureLow = GetTemperature(c.Units, now.temp_c, now.temp_f),
-                    Image = GetImagePath(now.is_day == 1, now.condition.code)
-                },
-                Forecast = weather.forecast.forecastday
-                        .SkipWhile(x => x.date.Date < DateTime.UtcNow.Date)
-                        .Select(x => new WeatherData
-                        {
-                            Timestamp = x.date,
-                            TemperatureHigh = GetTemperature(c.Units, today.day.maxtemp_c, today.day.maxtemp_f),
-                            TemperatureLow = GetTemperature(c.Units, today.day.mintemp_c, today.day.mintemp_f),
-                            Image = GetImagePath(true, x.day.condition.code)
-                        }).ToArray()
-            };
+            var result = new WeatherModel(
+                units,
+                c.Location,
+                new WeatherData(
+                    now.time,
+                    GetTemperature(c.Units, now.temp_c, now.temp_f),
+                    GetTemperature(c.Units, now.temp_c, now.temp_f),
+                    GetImagePath(now.is_day == 1, now.condition.code)
+                ),
+                weather.forecast.forecastday
+                    .SkipWhile(x => x.date.Date < DateTime.UtcNow.Date)
+                    .Select(x => new WeatherData(
+                        x.date,
+                        GetTemperature(c.Units, today.day.maxtemp_c, today.day.maxtemp_f),
+                        GetTemperature(c.Units, today.day.mintemp_c, today.day.mintemp_f),
+                        GetImagePath(true, x.day.condition.code)))
+                    .ToArray()
+            );
 
             return model with
             {
