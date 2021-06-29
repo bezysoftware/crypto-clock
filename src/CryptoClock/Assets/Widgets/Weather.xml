@@ -1,6 +1,5 @@
 ﻿<widget description="Shows current weather">
-  <binding sizes="4x2,5x2,4x4,4x3" justify="spread">
-
+  <binding sizes="4x3" justify="spread">
     <row>
       <column align="center" width="3">
         <image align="end" name="{{ Model.Weather.Current.Image }}" />
@@ -22,13 +21,58 @@
     
     <row>
       {{ for i in 0..2 }}
-      <column>
+      <column align="end">
         <text size="small" align="center">{{ Model.Weather.Forecast[i].Timestamp | date.to_string '%a' }}</text>
         <image align="center" name="{{ Model.Weather.Forecast[i].Image }}" />
         <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureLow }}-{{ Model.Weather.Forecast[i].TemperatureHigh }} {{ Model.Weather.Units }}</text>
       </column>
       {{ end }}
     </row>
+  </binding>
 
+  <binding sizes="3x2,4x2" justify="spread">
+
+    <row>
+      <column align="center" width="3">
+        <image align="end" name="{{ Model.Weather.Current.Image }}" />
+      </column>
+      <column align="center" width="4">
+        <text align="center" size="large">{{ Model.Weather.Current.TemperatureHigh }} {{ Model.Weather.Units }}</text>
+      </column>
+    </row>
+
+    <row>
+      <column width="6" />
+      <column width="1" align="center">
+        <image align="end" name="Assets/Weather/Location.png" />
+      </column>
+      <column width="8" align="end">
+        <text align="start" size="xsmall" weight="bold">{{ Model.Weather.Location }}</text>
+      </column>
+    </row>
+
+    <row>
+      {{ for i in 0..2 }}
+      <column align="end">
+        <text size="small" align="center">{{ Model.Weather.Forecast[i].Timestamp | date.to_string '%a' }}</text>
+        <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureLow }}-{{ Model.Weather.Forecast[i].TemperatureHigh }} {{ Model.Weather.Units }}</text>
+      </column>
+      {{ end }}
+    </row>
+  </binding>
+
+  <binding sizes="3x1,4x1" justify="spread">
+    <row>
+      <column align="center" width="3">
+        <image align="end" name="{{ Model.Weather.Current.Image }}" />
+      </column>
+      <column align="center" width="4">
+        <text align="center" size="large">{{ Model.Weather.Current.TemperatureHigh }} {{ Model.Weather.Units }}</text>
+      </column>
+    </row>
+  </binding>
+
+  <binding sizes="2x1" justify="spread">
+    <text align="center" size="large">{{ Model.Weather.Current.TemperatureHigh }} {{ Model.Weather.Units }}</text>
   </binding>
 </widget>
