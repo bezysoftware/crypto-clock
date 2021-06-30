@@ -42,7 +42,8 @@ namespace CryptoClock.Widgets.Rendering
             );
 
             var size = $"{columns}x{rows}";
-            var b = widget.Node.Bindings.First(x => x.Sizes.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(s => s == size));
+            var b = widget.Node.Bindings.FirstOrDefault(x => x.Sizes.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(s => s == size))
+                    ?? widget.Node.Bindings.First(x => x.Sizes == "*");
 
             return b.Render(context, this).Image.Encode(SKEncodedImageFormat.Png, 100).AsStream();
         }

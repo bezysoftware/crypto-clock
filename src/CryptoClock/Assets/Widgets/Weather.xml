@@ -31,7 +31,6 @@
   </binding>
 
   <binding sizes="3x2,4x2" justify="spread">
-
     <row>
       <column align="center" width="3">
         <image align="end" name="{{ Model.Weather.Current.Image }}" />
@@ -55,7 +54,11 @@
       {{ for i in 0..2 }}
       <column align="end">
         <text size="small" align="center">{{ Model.Weather.Forecast[i].Timestamp | date.to_string '%a' }}</text>
+        {{ if Config.Placement.Cols >= 4 }}
         <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureLow }}-{{ Model.Weather.Forecast[i].TemperatureHigh }} {{ Model.Weather.Units }}</text>
+        {{ else }}
+        <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureHigh }} {{ Model.Weather.Units }}</text>
+        {{ end }}
       </column>
       {{ end }}
     </row>

@@ -5,19 +5,19 @@
       "Left": 0,
       "Top": 0,
       "Cols": 4,
-      "Rows": 4
+      "Rows": 3
     },
-    "Background": "#000",
-    "Foreground": "#FFF",
+    "Background": "#FFF",
+    "Foreground": "#000",
     "Data": {
     }
   },
   {
-    "Id": "Time",
+    "Id": "Weather",
     "Placement": {
-      "Left": 5,
+      "Left": 4,
       "Top": 0,
-      "Cols": 2,
+      "Cols": 4,
       "Rows": 2
     },
     "Background": "#FFF",
@@ -26,16 +26,44 @@
     }
   },
   {
-    "Id": "Lightning",
+    "Id": "Weather",
     "Placement": {
       "Left": 4,
       "Top": 2,
-      "Cols": 6,
-      "Rows": 4
+      "Cols": 4,
+      "Rows": 2
     },
     "Background": "#FFF",
     "Foreground": "#000",
     "Data": {
+    }
+  },
+  {
+    "Id": "Time",
+    "Placement": {
+      "Left": 0,
+      "Top": 5,
+      "Cols": 3,
+      "Rows": 1
+    },
+    "Background": "#FFF",
+    "Foreground": "#000",
+    "Data": {
+      "Format": "%D"
+    }
+  },
+  {
+    "Id": "Time",
+    "Placement": {
+      "Left": 8,
+      "Top": 0,
+      "Cols": 2,
+      "Rows": 2
+    },
+    "Background": "#FFF",
+    "Foreground": "#000",
+    "Data": {
+      "Format": "%R"
     }
   }
 ]
