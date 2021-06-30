@@ -6,6 +6,6 @@
         
         string FontWeight { get; }
 
-        FontSize FontSize { get; }
+        ElementSize FontSize { get; }
     }
 }

@@ -10,13 +10,18 @@
     </row>
 
     <row>
-      <column width="6" />
-      <column width="1" align="center">
-        <image align="end" name="Assets/Weather/Location.png" />
+      <column />
+      <column align="center" width="auto">
+        <text align="start" size="xsmall" weight="bold">{{ Model.Weather.Current.Description }}</text>
       </column>
-      <column width="8" align="end">
-        <text align="start" size="xsmall" weight="bold">{{ Model.Weather.Location }}</text>
+      <column />
+      <column width="auto">
+        <image spacing="none" size="xsmall" name="Assets/Weather/Location.png" />
       </column>
+      <column width="auto" align="center">
+        <text align="center" size="xsmall" weight="bold">{{ Model.Weather.Location }}</text>
+      </column>
+      <column />
     </row>
     
     <row>
@@ -24,7 +29,7 @@
       <column align="end">
         <text size="small" align="center">{{ Model.Weather.Forecast[i].Timestamp | date.to_string '%a' }}</text>
         <image align="center" name="{{ Model.Weather.Forecast[i].Image }}" />
-        <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureLow }}-{{ Model.Weather.Forecast[i].TemperatureHigh }} {{ Model.Weather.Units }}</text>
+        <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureLow }}/{{ Model.Weather.Forecast[i].TemperatureHigh }}°</text>
       </column>
       {{ end }}
     </row>
@@ -41,24 +46,21 @@
     </row>
 
     <row>
-      <column width="6" />
-      <column width="1" align="center">
-        <image align="end" name="Assets/Weather/Location.png" />
+      <column />
+      <column width="auto" align="center">
+        <image spacing="none" size="xsmall" name="Assets/Weather/Location.png" />
       </column>
-      <column width="8" align="end">
+      <column width="auto" align="end">
         <text align="start" size="xsmall" weight="bold">{{ Model.Weather.Location }}</text>
       </column>
+      <column />
     </row>
 
     <row>
       {{ for i in 0..2 }}
       <column align="end">
         <text size="small" align="center">{{ Model.Weather.Forecast[i].Timestamp | date.to_string '%a' }}</text>
-        {{ if Config.Placement.Cols >= 4 }}
-        <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureLow }}-{{ Model.Weather.Forecast[i].TemperatureHigh }} {{ Model.Weather.Units }}</text>
-        {{ else }}
-        <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureHigh }} {{ Model.Weather.Units }}</text>
-        {{ end }}
+        <text size="small" align="center">{{ Model.Weather.Forecast[i].TemperatureLow }}/{{ Model.Weather.Forecast[i].TemperatureHigh }}°</text>
       </column>
       {{ end }}
     </row>

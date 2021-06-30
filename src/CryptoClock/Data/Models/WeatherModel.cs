@@ -13,6 +13,7 @@ namespace CryptoClock.Data.Models
         DateTime Timestamp,
         int TemperatureLow,
         int TemperatureHigh,
-        string Image)
+        string Image,
+        string Description)
     { }
 }

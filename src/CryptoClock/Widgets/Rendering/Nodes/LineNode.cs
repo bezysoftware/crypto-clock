@@ -9,7 +9,7 @@ namespace CryptoClock.Widgets.Rendering.Nodes
         public string Foreground { get; set; }
 
         [XmlAttribute("size")]
-        public FontSize Size { get; set; }
+        public ElementSize Size { get; set; }
 
         [XmlAttribute("divider")]
         public bool IsDivider { get; set; }

@@ -10,16 +10,16 @@ namespace CryptoClock.Widgets.Rendering
         ScreenConfig Screen,
         SKColor Background)
     {
-        public int GetFontSize(FontSize fontSize)
+        public int GetElementSize(ElementSize fontSize)
         {
             var div = fontSize switch
             {
-                FontSize.ExtraSmall => 34,
-                FontSize.Small => 21,
-                FontSize.Medium => 13,
-                FontSize.Large => 8,
-                FontSize.ExtraLarge => 5,
-                FontSize.Huge => 3,
+                ElementSize.ExtraSmall => 34,
+                ElementSize.Small => 21,
+                ElementSize.Medium => 13,
+                ElementSize.Large => 8,
+                ElementSize.ExtraLarge => 5,
+                ElementSize.Huge => 3,
                 _ => 13,
             };
 

@@ -2,7 +2,7 @@
 
 namespace CryptoClock.Widgets.Rendering.Nodes
 {
-    public enum FontSize
+    public enum ElementSize
     {
         [XmlEnum]
         Default,

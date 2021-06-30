@@ -165,9 +165,16 @@ namespace CryptoClock.Widgets.Rendering
                 _ => 2f
             };
 
-            var width = context.AvailableSize.Width / coef;
+            var width = image.Size switch
+            { 
+                ElementSize.Default => context.AvailableSize.Width / coef,
+                _ => context.GetElementSize(image.Size) / (float)bitmap.Height * bitmap.Width
+            };
+
             var scale = width / bitmap.Width;
-            var info = new SKImageInfo(context.AvailableSize.Width, (int)(bitmap.Height * scale));
+            var info = new SKImageInfo(
+                image.Size == ElementSize.Default ? context.AvailableSize.Width : (int)width, 
+                (int)(bitmap.Height * scale));
             
             var paint = context.Paint.Clone();
 
@@ -196,9 +203,9 @@ namespace CryptoClock.Widgets.Rendering
         public RenderedResult Render(RenderContext context, LineNode line)
         {
             var paint = context.Paint.Clone();
-            var size = context.GetFontSize(line.Size) / 5;
+            var size = context.GetElementSize(line.Size) / 5;
             var height = Math.Max(size, 1);
-            var spacing = line.IsDivider ? context.GetFontSize(FontSize.Small) : 0;
+            var spacing = line.IsDivider ? context.GetElementSize(ElementSize.Small) : 0;
             var info = new SKImageInfo(context.AvailableSize.Width, height + spacing * 2);
             
             using var surface = SKSurface.Create(info);
@@ -266,8 +273,8 @@ namespace CryptoClock.Widgets.Rendering
 
         protected virtual SKPaint ApplyFontPaint(IFontNode node, RenderContext context, SKPaint paint)
         {
-            var fontSize = node.FontSize != FontSize.Default ? node.FontSize : FontSize.Default;
-            paint.TextSize = context.GetFontSize(fontSize);
+            var fontSize = node.FontSize != ElementSize.Default ? node.FontSize : ElementSize.Default;
+            paint.TextSize = context.GetElementSize(fontSize);
 
             if (!string.IsNullOrWhiteSpace(node.Font) || !string.IsNullOrWhiteSpace(node.FontWeight))
             {

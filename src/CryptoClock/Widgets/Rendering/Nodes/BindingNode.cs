@@ -22,7 +22,7 @@ namespace CryptoClock.Widgets.Rendering.Nodes
         public string Font { get; set; }
 
         [XmlAttribute("font-size")]
-        public FontSize FontSize { get; set; }
+        public ElementSize FontSize { get; set; }
 
         [XmlAttribute("font-weight")]
         public string FontWeight { get; set; }

@@ -59,7 +59,8 @@ namespace CryptoClock.Data
                     now.time,
                     GetTemperature(c.Units, now.temp_c, now.temp_f),
                     GetTemperature(c.Units, now.temp_c, now.temp_f),
-                    GetImagePath(now.is_day == 1, now.condition.code)
+                    GetImagePath(now.is_day == 1, now.condition.code),
+                    now.condition.text
                 ),
                 weather.forecast.forecastday
                     .SkipWhile(x => x.date.Date < DateTime.UtcNow.Date)
@@ -67,7 +68,8 @@ namespace CryptoClock.Data
                         x.date,
                         GetTemperature(c.Units, today.day.mintemp_c, today.day.mintemp_f),
                         GetTemperature(c.Units, today.day.maxtemp_c, today.day.maxtemp_f),
-                        GetImagePath(true, x.day.condition.code)))
+                        GetImagePath(true, x.day.condition.code),
+                        now.condition.text))
                     .ToArray()
             );
 
