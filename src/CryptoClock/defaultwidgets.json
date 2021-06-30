@@ -4,37 +4,11 @@
     "Placement": {
       "Left": 0,
       "Top": 0,
-      "Cols": 4,
+      "Cols": 8,
       "Rows": 3
     },
-    "Background": "#FFF",
-    "Foreground": "#000",
-    "Data": {
-    }
-  },
-  {
-    "Id": "Weather",
-    "Placement": {
-      "Left": 4,
-      "Top": 0,
-      "Cols": 4,
-      "Rows": 2
-    },
-    "Background": "#FFF",
-    "Foreground": "#000",
-    "Data": {
-    }
-  },
-  {
-    "Id": "Weather",
-    "Placement": {
-      "Left": 4,
-      "Top": 2,
-      "Cols": 4,
-      "Rows": 2
-    },
-    "Background": "#FFF",
-    "Foreground": "#000",
+    "Background": "#000",
+    "Foreground": "#FFF",
     "Data": {
     }
   },
@@ -42,28 +16,74 @@
     "Id": "Time",
     "Placement": {
       "Left": 0,
-      "Top": 5,
-      "Cols": 3,
-      "Rows": 1
+      "Top": 4,
+      "Cols": 8,
+      "Rows": 4
     },
-    "Background": "#FFF",
-    "Foreground": "#000",
+    "Background": "#000",
+    "Foreground": "#FFF",
     "Data": {
-      "Format": "%D"
+      "Format": "%R",
+      "Size": "xlarge",
+      "Justify": "center"
     }
   },
   {
     "Id": "Time",
     "Placement": {
+      "Left": 0,
+      "Top": 9,
+      "Cols": 8,
+      "Rows": 2
+    },
+    "Background": "#000",
+    "Foreground": "#FFF",
+    "Justify": "end",
+    "Data": {
+      "Format": "%A",
+      "Size": "large"
+    }
+  },
+  {
+    "Id": "Time",
+    "Placement": {
+      "Left": 0,
+      "Top": 11,
+      "Cols": 8,
+      "Rows": 2
+    },
+    "Background": "#000",
+    "Foreground": "#FFF",
+    "Justify": "start",
+    "Data": {
+      "Format": "%D",
+      "Size": "medium"
+    }
+  },
+  {
+    "Id": "Weather",
+    "Placement": {
       "Left": 8,
       "Top": 0,
-      "Cols": 2,
-      "Rows": 2
+      "Cols": 8,
+      "Rows": 5
     },
     "Background": "#FFF",
     "Foreground": "#000",
     "Data": {
-      "Format": "%R"
+    }
+  },
+  {
+    "Id": "Weather",
+    "Placement": {
+      "Left": 8,
+      "Top": 6,
+      "Cols": 8,
+      "Rows": 6
+    },
+    "Background": "#FFF",
+    "Foreground": "#000",
+    "Data": {
     }
   }
 ]

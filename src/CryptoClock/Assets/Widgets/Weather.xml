@@ -1,5 +1,5 @@
 ﻿<widget description="Shows current weather">
-  <binding sizes="4x3" justify="spread">
+  <binding sizes="7x6,8x6,7x5,8x5">
     <row>
       <column align="center" width="3">
         <image align="end" name="{{ Model.Weather.Current.Image }}" />
@@ -9,6 +9,7 @@
       </column>
     </row>
 
+    {{ if Config.Placement.Rows >= 6 }}
     <row>
       <column />
       <column align="center" width="auto">
@@ -23,6 +24,7 @@
       </column>
       <column />
     </row>
+    {{ end }}
     
     <row>
       {{ for i in 0..2 }}
@@ -35,7 +37,7 @@
     </row>
   </binding>
 
-  <binding sizes="3x2,4x2" justify="spread">
+  <binding sizes="5x4,6x4,7x4,8x4,5x3,6x3,7x3,8x3">
     <row>
       <column align="center" width="3">
         <image align="end" name="{{ Model.Weather.Current.Image }}" />
@@ -45,6 +47,7 @@
       </column>
     </row>
 
+    {{ if Config.Placement.Rows >= 4 }}
     <row>
       <column />
       <column width="auto" align="center">
@@ -55,6 +58,7 @@
       </column>
       <column />
     </row>
+    {{ end }}
 
     <row>
       {{ for i in 0..2 }}
@@ -66,7 +70,7 @@
     </row>
   </binding>
 
-  <binding sizes="3x1,4x1" justify="spread">
+  <binding sizes="5x2,6x2,7x2,8x2">
     <row>
       <column align="center" width="3">
         <image align="end" name="{{ Model.Weather.Current.Image }}" />
@@ -77,7 +81,7 @@
     </row>
   </binding>
 
-  <binding sizes="2x1" justify="spread">
+  <binding sizes="3x2,4x2">
     <text align="center" size="large">{{ Model.Weather.Current.TemperatureHigh }} {{ Model.Weather.Units }}</text>
   </binding>
 </widget>

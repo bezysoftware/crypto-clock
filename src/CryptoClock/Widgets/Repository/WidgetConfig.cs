@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CryptoClock.Widgets.Rendering.Nodes;
+using System.Collections.Generic;
 
 namespace CryptoClock.Widgets.Repository
 {
@@ -6,6 +7,7 @@ namespace CryptoClock.Widgets.Repository
         string Id,
         string Background,
         string Foreground,
+        JustifyContent Justify,
         WidgetPlacement Placement,
         Dictionary<string, object> Data)
     {

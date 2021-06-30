@@ -4,6 +4,9 @@ namespace CryptoClock.Widgets.Rendering.Nodes
 {
     public enum JustifyContent
     {
+        [XmlIgnore]
+        Unset,
+
         [XmlEnum("start")]
         Start,
 

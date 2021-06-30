@@ -8,7 +8,8 @@ namespace CryptoClock.Widgets.Rendering
         SKSizeI AvailableSize,
         SKPaint Paint,
         ScreenConfig Screen,
-        SKColor Background)
+        SKColor Background,
+        JustifyContent Justify)
     {
         public int GetElementSize(ElementSize fontSize)
         {
@@ -20,10 +21,10 @@ namespace CryptoClock.Widgets.Rendering
                 ElementSize.Large => 8,
                 ElementSize.ExtraLarge => 5,
                 ElementSize.Huge => 3,
-                _ => 13,
+                _ => 13.0,
             };
 
-            return this.Screen.Height / div;
+            return (int)(this.Screen.Height / div);
         }
     }
 }

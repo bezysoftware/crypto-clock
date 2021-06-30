@@ -38,7 +38,8 @@ namespace CryptoClock.Widgets.Rendering
                     Color = SKColor.Parse(widget.Config.Foreground)
                 },
                 this.screenConfig,
-                SKColor.Parse(widget.Config.Background)
+                SKColor.Parse(widget.Config.Background),
+                widget.Config.Justify
             );
 
             var size = $"{columns}x{rows}";
@@ -62,7 +63,7 @@ namespace CryptoClock.Widgets.Rendering
             {
                 AvailableSize = new SKSizeI(info.Size.Width - edge, info.Size.Height - edge)
             };
-            var result = Render(ctx, binding, binding.Justify);
+            var result = Render(ctx, binding, context.Justify == JustifyContent.Unset ? binding.Justify : context.Justify);
 
             surface.Canvas.DrawImage(result.Image, new SKPoint(this.renderConfig.Margin, this.renderConfig.Margin));
 
@@ -93,7 +94,7 @@ namespace CryptoClock.Widgets.Rendering
             // then draw other proportionate columns
             foreach (var (column, i) in columns.Where(x => !x.column.Width.Auto))
             {
-                var width = (int)((float)availableWidth / widthSum * column.Width.Size);
+                var width = (int)Math.Ceiling((float)availableWidth / widthSum * column.Width.Size);
                 var ctx = context with
                 {
                     AvailableSize = new SKSizeI(width, context.AvailableSize.Height)
@@ -225,6 +226,11 @@ namespace CryptoClock.Widgets.Rendering
             IVerticalElementsNode node,
             JustifyContent justify)
         {
+            if (justify == JustifyContent.Unset)
+            {
+                justify = JustifyContent.Spread;
+            }
+
             var heightLeft = context.AvailableSize.Height;
             var results = new List<RenderedResult>();
 
@@ -249,11 +255,11 @@ namespace CryptoClock.Widgets.Rendering
             var height = justify == JustifyContent.Start ? context.AvailableSize.Height - heightLeft : context.AvailableSize.Height;
             var offsetY = justify switch
             {
-                JustifyContent.Center => heightLeft / 2,
+                JustifyContent.Start => 0f,
                 JustifyContent.End => heightLeft,
-                JustifyContent.Spread 
-                    when items == 1 => heightLeft / 2,
-                _ => 0f
+                JustifyContent.Spread when items == 1 => heightLeft / 2,
+                JustifyContent.Spread => 0f,
+                _ => heightLeft / 2
             };
 
             var info = new SKImageInfo(Math.Max(maxWidth, context.AvailableSize.Width), Math.Max(height, 1));
