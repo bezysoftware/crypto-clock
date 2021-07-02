@@ -1,0 +1,19 @@
+﻿<widget description="Latest blockchain blocks">
+  <binding sizes="*">
+
+    <row>
+      {{ for i in 0..3 }}
+      <column>
+        <image align="center" name="Assets/Block.png" />
+        <text size="small" align="center">#{{ Model.LastBlocks[i].Height }}</text>
+        <line size="tiny" foreground="{{ Config.Background }}" />
+        <text size="xsmall" align="center">{{ Model.LastBlocks[i].FormattedSize }}</text>
+        <text size="xsmall" align="center">{{ Model.LastBlocks[i].AvgFeeRate }} sat/vB</text>
+        <text size="xsmall" align="center">{{ Model.LastBlocks[i].Transactions }} transactions</text>
+        <text size="xsmall" align="center">{{ Model.LastBlocks[i].MinutesAgo }} minutes ago</text>
+      </column>
+      {{ end }}
+    </row>
+    
+  </binding>
+</widget>

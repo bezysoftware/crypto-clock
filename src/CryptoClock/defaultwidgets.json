@@ -61,11 +61,24 @@
     }
   },
   {
-    "Id": "Weather",
+    "Id": "Balance",
     "Placement": {
       "Left": 8,
       "Top": 0,
-      "Cols": 8,
+      "Cols": 12,
+      "Rows": 4
+    },
+    "Background": "#FFF",
+    "Foreground": "#000",
+    "Data": {
+    }
+  },
+  {
+    "Id": "Blocks",
+    "Placement": {
+      "Left": 8,
+      "Top": 4,
+      "Cols": 12,
       "Rows": 5
     },
     "Background": "#FFF",
@@ -74,16 +87,17 @@
     }
   },
   {
-    "Id": "Weather",
+    "Id": "Channels",
     "Placement": {
       "Left": 8,
-      "Top": 6,
-      "Cols": 8,
-      "Rows": 6
+      "Top": 9,
+      "Cols": 12,
+      "Rows": 4
     },
     "Background": "#FFF",
     "Foreground": "#000",
     "Data": {
+      "Justify": "end"
     }
   }
 ]

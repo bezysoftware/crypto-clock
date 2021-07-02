@@ -135,12 +135,13 @@ namespace CryptoClock.Widgets.Rendering
         {
             var bounds = new SKRect();
             var paint = ApplyFontPaint(text, context, context.Paint.Clone());
+            var txt = text.Text ?? string.Empty;
 
-            paint.MeasureText(text.Text.AsSpan(), ref bounds);
+            paint.MeasureText(txt.AsSpan(), ref bounds);
 
             var height = (int)bounds.Size.Height;
             var width = (int)Math.Ceiling(bounds.Right);
-            var info = new SKImageInfo(width, height);
+            var info = new SKImageInfo(Math.Max(1, width), Math.Max(1, height));
             
             using var surface = SKSurface.Create(info);
             using var font = new SKFont
@@ -150,7 +151,7 @@ namespace CryptoClock.Widgets.Rendering
                 Typeface = paint.Typeface
             };
             
-            surface.Canvas.DrawText(text.Text, 0, -bounds.Top, font, paint);
+            surface.Canvas.DrawText(txt, 0, -bounds.Top, font, paint);
             
             return new RenderedResult(surface.Snapshot(), info.Size);
         }

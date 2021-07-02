@@ -1,0 +1,8 @@
+﻿<widget description="Your current balance">
+  <binding sizes="*" justify="center">
+
+    <text align="center">₿ {{ Model.Lightning.TotalBalance }}</text>
+    <text align="center">~ {{ Model.Price.Symbol }} {{ Model.Price.Price }}</text>
+
+  </binding>
+</widget>

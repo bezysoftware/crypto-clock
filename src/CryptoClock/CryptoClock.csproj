@@ -21,6 +21,7 @@
     <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.80.2" />
     <PackageReference Include="eXoCooLd.Waveshare.EPaperDisplay" Version="1.0.4" />
     <PackageReference Include="Scriban" Version="4.0.1" />
+    <PackageReference Include="ByteSize" Version="2.0.0" />
     <PackageReference Include="Grpc.Tools" Version="2.37.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

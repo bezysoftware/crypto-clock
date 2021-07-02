@@ -66,8 +66,8 @@ namespace CryptoClock.Data
                     .SkipWhile(x => x.date.Date < DateTime.UtcNow.Date)
                     .Select(x => new WeatherData(
                         x.date,
-                        GetTemperature(c.Units, today.day.mintemp_c, today.day.mintemp_f),
-                        GetTemperature(c.Units, today.day.maxtemp_c, today.day.maxtemp_f),
+                        GetTemperature(c.Units, x.day.mintemp_c, x.day.mintemp_f),
+                        GetTemperature(c.Units, x.day.maxtemp_c, x.day.maxtemp_f),
                         GetImagePath(true, x.day.condition.code),
                         now.condition.text))
                     .ToArray()

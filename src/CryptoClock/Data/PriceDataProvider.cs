@@ -25,13 +25,14 @@ namespace CryptoClock.Data
         public async Task<CryptoModel> EnrichAsync(CryptoModel model)
         {
             var currency = this.config.Value.Currency;
+            var symbol = CurrencyMap.GetSymbol(currency);
             var url = string.Format(GeckoUrl, BitcoinId, currency);
             var response = await this.http.GetObjectAsync<Dictionary<string, Dictionary<string, decimal>>>(url);
             var price = response[BitcoinId][currency];
 
-            return model with 
+            return model with
             {
-                Price = new PriceModel(currency, price)
+                Price = new PriceModel(currency, symbol, price)
             };
         }
     }

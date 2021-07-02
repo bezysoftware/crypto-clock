@@ -46,9 +46,10 @@ namespace CryptoClock.Data
             while(count-- > 0)
             {
                 var block = await RunBitcoinQueryAsync<Block>(x => x.GetBlock(hash));
+                var stats = await RunBitcoinQueryAsync<BlockStats>(x => x.GetBlockStats(hash));
                 var timestamp = DateTimeOffset.FromUnixTimeSeconds(block.Time).UtcDateTime;
                 
-                result.Add(new BlockModel(block.Height, timestamp, block.NTx));
+                result.Add(new BlockModel(block.Height, timestamp, block.NTx, block.Size, stats.AvgFeeRate, stats.MinFeeRate, stats.MaxFeeRate));
                 hash = block.PreviousBlockHash; 
             }
 
@@ -74,6 +75,14 @@ namespace CryptoClock.Data
             public int Time { get; set; }
             public int NTx { get; set; }
             public string PreviousBlockHash { get; set; }
+            public double Size { get; set; }
+        }
+
+        internal class BlockStats
+        {
+            public double AvgFeeRate { get; set; }
+            public double MaxFeeRate { get; set; }
+            public double MinFeeRate { get; set; }
         }
     }
 }

@@ -1,0 +1,47 @@
+﻿<widget description="Shows overview of your lightning channels">
+  <binding sizes="12x4" justify="center">
+
+    <block>
+      <row>
+        <column>
+          <text align="start">8M</text>
+        </column>
+        <column>
+          <text align="end">3M</text>
+        </column>
+      </row>
+
+      <row>
+        <column width="8">
+          <line size="medium" foreground="#aaa" />
+        </column>
+        <column width="3">
+          <line size="medium" foreground="#444" />
+        </column>
+      </row>
+
+      <row>
+        <column align="center">
+          <text size="small" align="start">Max send</text>
+        </column>
+        <column width="auto" align="center">
+          <text  weight="bold">Total</text>
+        </column>
+        <column align="center">
+          <text size="small" align="end">Max receive</text>
+        </column>
+      </row>
+    </block>
+
+    <!--<row>
+      <column>
+      </column>
+      <column>
+        <line size="xsmall" divider="true" foreground="#ddd" />
+      </column>
+      <column>
+      </column>
+    </row>-->
+
+  </binding>
+</widget>

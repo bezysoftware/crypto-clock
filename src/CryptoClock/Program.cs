@@ -1,5 +1,6 @@
 ﻿using CryptoClock.Configuration;
 using CryptoClock.Data;
+using CryptoClock.Data.Debug;
 using CryptoClock.Screens;
 using CryptoClock.Widgets;
 using CryptoClock.Widgets.Rendering;
@@ -29,8 +30,6 @@ namespace CryptoClock
                     services.Configure<RenderConfig>(context.Configuration.GetSection("Rendering"));
                     services.Configure<ScreenConfig>(context.Configuration.GetSection("Screen"));
 
-                    //services.AddSingleton<IDataProvider, BitcoinDataProvider>();
-                    //services.AddSingleton<IDataProvider, LightningDataProvider>();
                     services.AddSingleton<IDataProvider, PriceDataProvider>();
                     services.AddSingleton<IDataProvider, DateTimeDataProvider>();
                     services.AddSingleton<IDataProvider, WeatherDataProvider>();
@@ -40,10 +39,14 @@ namespace CryptoClock
 
                     if (context.HostingEnvironment.IsDevelopment())
                     {
+                        services.AddSingleton<IDataProvider, DebugLightningDataProvider>();
+                        services.AddSingleton<IDataProvider, DebugBitcoinDataProvider>();
                         services.AddSingleton<IScreenPrinter, DebugScreenPrinter>();
                     }
                     else
                     {
+                        services.AddSingleton<IDataProvider, LightningDataProvider>();
+                        services.AddSingleton<IDataProvider, BitcoinDataProvider>();
                         services.AddSingleton<IScreenPrinter, ScreenPrinter>();
                     }
 

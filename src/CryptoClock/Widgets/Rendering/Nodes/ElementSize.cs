@@ -7,6 +7,9 @@ namespace CryptoClock.Widgets.Rendering.Nodes
         [XmlEnum]
         Default,
 
+        [XmlEnum("tiny")]
+        Tiny,
+
         [XmlEnum("xsmall")]
         ExtraSmall,
 

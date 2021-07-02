@@ -15,7 +15,8 @@ namespace CryptoClock.Widgets.Rendering
         {
             var div = fontSize switch
             {
-                ElementSize.ExtraSmall => 34,
+                ElementSize.Tiny => 34,
+                ElementSize.ExtraSmall => 29,
                 ElementSize.Small => 21,
                 ElementSize.Medium => 13,
                 ElementSize.Large => 8,
