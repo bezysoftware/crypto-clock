@@ -1,5 +1,5 @@
 ﻿<widget description="Shows overview of your lightning channels">
-  <binding sizes="12x4" justify="center">
+  <binding sizes="12x3" justify="start">
 
     <block>
       <row>
@@ -21,13 +21,10 @@
       </row>
 
       <row>
-        <column align="center">
+        <column>
           <text size="small" align="start">Max send</text>
         </column>
-        <column width="auto" align="center">
-          <text  weight="bold">Total</text>
-        </column>
-        <column align="center">
+        <column>
           <text size="small" align="end">Max receive</text>
         </column>
       </row>

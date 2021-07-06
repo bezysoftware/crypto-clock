@@ -66,11 +66,27 @@
       "Left": 8,
       "Top": 0,
       "Cols": 12,
-      "Rows": 4
+      "Rows": 3
     },
     "Background": "#FFF",
     "Foreground": "#000",
     "Data": {
+    }
+  },
+  {
+    "Id": "Text",
+    "Placement": {
+      "Left": 8,
+      "Top": 3,
+      "Cols": 12,
+      "Rows": 1
+    },
+    "Background": "#fff",
+    "Foreground": "#000",
+    "Data": {
+      "Align": "center",
+      "Text": "BLOCKS",
+      "Size": "xsmall"
     }
   },
   {
@@ -81,23 +97,39 @@
       "Cols": 12,
       "Rows": 5
     },
-    "Background": "#FFF",
+    "Background": "#fff",
+    "Foreground": "#000",
+    "Justify": "start",
+    "Data": {
+    }
+  },
+  {
+    "Id": "Text",
+    "Placement": {
+      "Left": 8,
+      "Top": 9,
+      "Cols": 12,
+      "Rows": 1
+    },
+    "Background": "#fff",
     "Foreground": "#000",
     "Data": {
+      "Align": "center",
+      "Text": "LIGHTNING CHANNELS",
+      "Size": "xsmall"
     }
   },
   {
     "Id": "Channels",
     "Placement": {
       "Left": 8,
-      "Top": 9,
+      "Top": 10,
       "Cols": 12,
-      "Rows": 4
+      "Rows": 3
     },
-    "Background": "#FFF",
+    "Background": "#fff",
     "Foreground": "#000",
     "Data": {
-      "Justify": "end"
     }
   }
 ]
