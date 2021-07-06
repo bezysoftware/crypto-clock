@@ -1,5 +1,5 @@
 ﻿<widget description="Latest blockchain blocks">
-  <binding sizes="*">
+  <binding sizes="*x2,*x3,*x4,*x5">
 
     <row>
       {{

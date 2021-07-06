@@ -42,11 +42,16 @@ namespace CryptoClock.Widgets.Rendering
                 widget.Config.Justify
             );
 
+            var bindings = widget.Node.Bindings.Select(x => new { binding = x, sizes = x.Sizes.Split(',', StringSplitOptions.RemoveEmptyEntries) }).ToArray();
             var size = $"{columns}x{rows}";
-            var b = widget.Node.Bindings.FirstOrDefault(x => x.Sizes.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(s => s == size))
-                    ?? widget.Node.Bindings.First(x => x.Sizes == "*");
+            var anyCol = $"*x{rows}";
+            var anyRow = $"{columns}x*";
+            var b = bindings.FirstOrDefault(x => x.sizes.Any(s => s == size))
+                 ?? bindings.FirstOrDefault(x => x.sizes.Any(s => s == anyCol))
+                 ?? bindings.FirstOrDefault(x => x.sizes.Any(s => s == anyRow))
+                 ?? bindings.First(x => x.binding.Sizes == "*");
 
-            return b.Render(context, this).Image.Encode(SKEncodedImageFormat.Png, 100).AsStream();
+            return b.binding.Render(context, this).Image.Encode(SKEncodedImageFormat.Png, 100).AsStream();
         }
 
         public RenderedResult Render(RenderContext context, BindingNode binding)
