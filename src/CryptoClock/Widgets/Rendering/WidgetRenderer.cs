@@ -137,19 +137,20 @@ namespace CryptoClock.Widgets.Rendering
             var paint = ApplyFontPaint(text, context, context.Paint.Clone());
             var txt = text.Text ?? string.Empty;
 
-            paint.MeasureText(txt.AsSpan(), ref bounds);
-
-            var height = (int)bounds.Size.Height;
-            var width = (int)Math.Ceiling(bounds.Right);
-            var info = new SKImageInfo(Math.Max(1, width), Math.Max(1, height));
-            
-            using var surface = SKSurface.Create(info);
             using var font = new SKFont
             {
                 Edging = SKFontEdging.Alias,
                 Size = paint.TextSize,
                 Typeface = paint.Typeface
             };
+
+            paint.MeasureText(txt.AsSpan(), ref bounds);
+
+            var height = (int)bounds.Size.Height;
+            var width = (int)Math.Ceiling(bounds.Right);
+            var info = new SKImageInfo(Math.Max(1, width + 2), Math.Max(1, height));
+            
+            using var surface = SKSurface.Create(info);
             
             surface.Canvas.DrawText(txt, 0, -bounds.Top, font, paint);
             
