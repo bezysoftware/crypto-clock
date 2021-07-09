@@ -1,5 +1,5 @@
 ﻿<widget description="Shows overview of your lightning channels">
-  <binding sizes="12x3" justify="start">
+  <binding sizes="*">
 
     <block>
       <row>
@@ -29,16 +29,6 @@
         </column>
       </row>
     </block>
-
-    <!--<row>
-      <column>
-      </column>
-      <column>
-        <line size="xsmall" divider="true" foreground="#ddd" />
-      </column>
-      <column>
-      </column>
-    </row>-->
-
+    
   </binding>
 </widget>
