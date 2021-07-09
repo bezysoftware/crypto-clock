@@ -12,9 +12,13 @@ namespace CryptoClock.Data.Models
         double MinFeeRate,
         double MaxFeeRate)
     {
-        public int MinutesAgo => (int)(DateTime.UtcNow - Timestamp).TotalMinutes;
+        public string FormattedTimestamp => Height == 0 
+            ? "In ~10 minutes"
+            : $"{(int)(DateTime.UtcNow - Timestamp).TotalMinutes} minutes ago";
         
         public string FormattedSize => ByteSize.FromBytes(Size).ToString();
+
+        public string DisplayHeight => Height == 0 ? "Next" : Height.ToString();
     }
 
 }

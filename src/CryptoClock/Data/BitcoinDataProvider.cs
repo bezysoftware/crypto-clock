@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BitcoinRpc;
 using BitcoinRpc.CoreRPC;
 using CryptoClock.Configuration;
+using CryptoClock.Data.Bitcoin;
 using CryptoClock.Data.Models;
 using Microsoft.Extensions.Options;
 
@@ -30,9 +31,12 @@ namespace CryptoClock.Data
         }
         public async Task<CryptoModel> EnrichAsync(CryptoModel model)
         {
+            var blocks = await GetBlocksAsync(this.config.BlockCount);
+            var mempoolBlock = MempoolBlockCalculator.CalculateMempoolBlock(new Transaction[0]);
+
             var result = model with
             {
-                LastBlocks = await GetBlocksAsync(this.config.BlockCount)
+                Bitcoin = new BitcoinModel(blocks, mempoolBlock)
             };
 
             return result;
@@ -62,27 +66,6 @@ namespace CryptoClock.Data
             var result = JsonSerializer.Deserialize<RpcResult<T>>(response, this.jsonOptions);
 
             return result.Result;
-        }
-
-        internal class RpcResult<T> 
-        {
-            public T Result { get; set; }
-        }
-
-        internal class Block
-        {
-            public int Height { get; set; }
-            public int Time { get; set; }
-            public int NTx { get; set; }
-            public string PreviousBlockHash { get; set; }
-            public double Size { get; set; }
-        }
-
-        internal class BlockStats
-        {
-            public double AvgFeeRate { get; set; }
-            public double MaxFeeRate { get; set; }
-            public double MinFeeRate { get; set; }
         }
     }
 }

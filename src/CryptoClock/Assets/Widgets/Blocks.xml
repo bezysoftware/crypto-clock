@@ -1,36 +1,64 @@
 ﻿<widget description="Latest blockchain blocks">
-  <binding sizes="*x2,*x3,*x4,*x5">
-
+  {{
+  cols = Config.Placement.Cols // 3
+  blocks = cols > 1 ? Model.Bitcoin.BlocksWithMempool : Model.Bitcoin.LastBlocks
+  }}
+  <binding sizes="*x2">
     <row>
-      {{
-      cols = Config.Placement.Cols // 4
-      for i in 0..cols
-      }}
+      {{ for block in blocks limit:cols }}
       <column>
-        {{ if Config.Placement.Rows > 3 }}
-          <image align="center" size="large" spacing="none" name="Assets/Block.png" />
-          <text size="small" align="center">{{ Model.LastBlocks[i].Height }}</text>  
-        {{ else }}
-          <image align="center" size="medium" spacing="none" name="Assets/Block.png" />
-          <text size="xsmall" weight="bold" align="center">{{ Model.LastBlocks[i].Height }}</text>
-        {{ end }}
-        {{ if Config.Placement.Rows > 4 }}
-          <line size="tiny" foreground="{{ Config.Background }}" />
-        {{ end }}
-        {{ if Config.Placement.Rows > 3 }}
-          <text size="xsmall" align="center">{{ Model.LastBlocks[i].FormattedSize }}</text>
-        {{ end }}
-        {{ if Config.Placement.Rows > 2 }}
-          <text size="xsmall" align="center">{{ Model.LastBlocks[i].AvgFeeRate }} sat/vB</text>
-          {{ if Config.Placement.Rows > 4 }}
-            <text size="xsmall" align="center">{{ Model.LastBlocks[i].MinFeeRate }} - {{ Model.LastBlocks[i].MaxFeeRate }} sat/vB</text>
-          {{ end }}
-          <text size="xsmall" align="center">{{ Model.LastBlocks[i].Transactions }} transactions</text>
-        {{ end }}
-        <text size="xsmall" align="center">{{ Model.LastBlocks[i].MinutesAgo }} minutes ago</text>
+        <image align="center" size="medium" spacing="none" name="Assets/Block.png" />
+        <text size="xsmall" weight="bold" align="center">{{ block.DisplayHeight }}</text>
+        <text size="xsmall" align="center">{{ block.FormattedTimestamp }}</text>
       </column>
       {{ end }}
     </row>
-    
+  </binding>
+
+  <binding sizes="*x3">
+    <row>
+      {{ for block in blocks limit:cols }}
+      <column>
+        <image align="center" size="medium" spacing="none" name="Assets/Block.png" />
+        <text size="xsmall" weight="bold" align="center">{{ block.DisplayHeight }}</text>
+        <line size="tiny" foreground="{{ Config.Background }}" />
+        <text size="xsmall" align="center">{{ block.AvgFeeRate }} sat/vB</text>
+        <text size="xsmall" align="center">{{ block.Transactions }} transactions</text>
+        <text size="xsmall" align="center">{{ block.FormattedTimestamp }}</text>
+      </column>
+      {{ end }}
+    </row>
+  </binding>
+
+  <binding sizes="*x4">
+    <row>
+      {{ for block in blocks limit:cols }}
+      <column>
+        <image align="center" size="large" spacing="none" name="Assets/Block.png" />
+        <text size="small" align="center">{{ block.DisplayHeight }}</text>
+        <text size="xsmall" align="center">{{ block.FormattedSize }}</text>
+        <text size="xsmall" align="center">{{ block.AvgFeeRate }} sat/vB</text>
+        <text size="xsmall" align="center">{{ block.Transactions }} transactions</text>
+        <text size="xsmall" align="center">{{ block.FormattedTimestamp }}</text>
+      </column>
+      {{ end }}
+    </row>
+  </binding>
+
+  <binding sizes="*x5">
+    <row>
+      {{ for block in blocks limit:cols }}
+      <column>
+        <image align="center" size="large" spacing="none" name="Assets/Block.png" />
+        <text size="small" align="center">{{ block.DisplayHeight }}</text>
+        <line size="tiny" foreground="{{ Config.Background }}" />
+        <text size="xsmall" align="center">{{ block.FormattedSize }}</text>
+        <text size="xsmall" align="center">{{ block.AvgFeeRate }} sat/vB</text>
+        <text size="xsmall" align="center">{{ block.MinFeeRate }} - {{ block.MaxFeeRate }} sat/vB</text>
+        <text size="xsmall" align="center">{{ block.Transactions }} transactions</text>
+        <text size="xsmall" align="center">{{ block.FormattedTimestamp }}</text>
+      </column>
+      {{ end }}
+    </row>
   </binding>
 </widget>

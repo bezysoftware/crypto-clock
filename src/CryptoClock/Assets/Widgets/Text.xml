@@ -1,7 +1,10 @@
 ﻿<widget description="Shows custom text">
   <binding sizes="*">
 
-    <text align="{{ Config.Data['Align'] }}" size="{{ Config.Data['Size'] }}">{{ Config.Data['Text'] }}</text>
+    <text 
+      align="{{ Config.Data['Align'] }}" 
+      size="{{ Config.Data['Size'] }}" 
+      weight="{{ Config.Data['Weight'] }}">{{ Config.Data['Text'] }}</text>
 
   </binding>
 </widget>

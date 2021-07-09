@@ -86,7 +86,8 @@
     "Data": {
       "Align": "center",
       "Text": "BLOCKS",
-      "Size": "xsmall"
+      "Size": "xsmall",
+      "Weight": "bold"
     }
   },
   {
@@ -116,7 +117,8 @@
     "Data": {
       "Align": "center",
       "Text": "LIGHTNING CHANNELS",
-      "Size": "xsmall"
+      "Size": "xsmall",
+      "Weight": "bold"
     }
   },
   {
@@ -125,10 +127,11 @@
       "Left": 8,
       "Top": 10,
       "Cols": 12,
-      "Rows": 3
+      "Rows": 2
     },
     "Background": "#fff",
     "Foreground": "#000",
+    "Justify": "end",
     "Data": {
     }
   }

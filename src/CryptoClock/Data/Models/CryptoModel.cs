@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace CryptoClock.Data.Models
 {
@@ -13,6 +12,6 @@ namespace CryptoClock.Data.Models
 
         public PriceModel Price { get; init; }
 
-        public IEnumerable<BlockModel> LastBlocks { get; init; }
+        public BitcoinModel Bitcoin { get; init; }
     }
 }

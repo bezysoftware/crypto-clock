@@ -2,7 +2,6 @@
 using CryptoClock.Data;
 using CryptoClock.Data.Debug;
 using CryptoClock.Screens;
-using CryptoClock.Widgets;
 using CryptoClock.Widgets.Rendering;
 using CryptoClock.Widgets.Repository;
 using Microsoft.Extensions.DependencyInjection;
