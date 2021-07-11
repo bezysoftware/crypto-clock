@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoClock", "CryptoClock\CryptoClock.csproj", "{91BEA55F-B5CA-4372-A5C7-ADA1D4A82124}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoClock", "CryptoClock\CryptoClock.csproj", "{91BEA55F-B5CA-4372-A5C7-ADA1D4A82124}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8DCD762F-9BD6-4AB3-8BAF-13C475EF1FA1}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,9 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{91BEA55F-B5CA-4372-A5C7-ADA1D4A82124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +33,11 @@ Global
 		{91BEA55F-B5CA-4372-A5C7-ADA1D4A82124}.Release|x64.Build.0 = Release|Any CPU
 		{91BEA55F-B5CA-4372-A5C7-ADA1D4A82124}.Release|x86.ActiveCfg = Release|Any CPU
 		{91BEA55F-B5CA-4372-A5C7-ADA1D4A82124}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2ADC6B9B-1331-4E12-923E-E75358C10183}
 	EndGlobalSection
 EndGlobal

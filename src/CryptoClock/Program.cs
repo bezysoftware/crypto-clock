@@ -1,6 +1,6 @@
 ﻿using CryptoClock.Configuration;
 using CryptoClock.Data;
-using CryptoClock.Data.Debug;
+using CryptoClock.Data.Dummy;
 using CryptoClock.Screens;
 using CryptoClock.Widgets.Rendering;
 using CryptoClock.Widgets.Repository;
@@ -38,8 +38,8 @@ namespace CryptoClock
 
                     if (context.HostingEnvironment.IsDevelopment())
                     {
-                        services.AddSingleton<IDataProvider, DebugLightningDataProvider>();
-                        services.AddSingleton<IDataProvider, DebugBitcoinDataProvider>();
+                        services.AddSingleton<IDataProvider, DummyLightningDataProvider>();
+                        services.AddSingleton<IDataProvider, DummyBitcoinDataProvider>();
                         services.AddSingleton<IScreenPrinter, DebugScreenPrinter>();
                     }
                     else
