@@ -16,7 +16,7 @@ namespace CryptoClock.Widgets.Rendering
                 _ => ""
             };
             
-            var file = string.Format(WidgetDefinitionsLocation, $"{name}{weightModifier}");
+            var file = string.Format(WidgetDefinitionsLocation, $"{name.ToLower()}{weightModifier}");
             
             using var stream = File.OpenRead(file);
 

@@ -14,7 +14,7 @@ namespace CryptoClock.Data
 
             SymbolsByCode = CultureInfo
                             .GetCultures(CultureTypes.SpecificCultures)
-                            .Select(x => new RegionInfo(x.LCID))
+                            .Select(x => new RegionInfo(x.Name))
                             .DistinctBy(x => x.ISOCurrencySymbol)
                             .ToDictionary(x => x.ISOCurrencySymbol, x => x.CurrencySymbol);
         }
