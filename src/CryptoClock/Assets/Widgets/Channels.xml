@@ -1,5 +1,5 @@
 ﻿<widget description="Shows overview of your lightning channels">
-  <binding sizes="*x*">
+  <binding sizes="6+x2+">
 
     <block>
       <row>

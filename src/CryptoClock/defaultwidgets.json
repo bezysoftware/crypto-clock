@@ -56,7 +56,7 @@
     "Foreground": "#FFF",
     "Justify": "start",
     "Data": {
-      "Format": "%D",
+      "Format": "%g",
       "Size": "medium"
     }
   },

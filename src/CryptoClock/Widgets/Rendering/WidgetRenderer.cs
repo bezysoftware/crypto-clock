@@ -44,6 +44,11 @@ namespace CryptoClock.Widgets.Rendering
 
             var binding = widget.Node.Bindings.FirstOrDefault(x => x.Sizes.Any(size => size.Matches(columns, rows)));
 
+            if (binding == null)
+            {
+                throw new InvalidOperationException($"No binding available for widget '{widget.Config.Id}' and size '{columns}x{rows}'");
+            }
+
             return binding.Render(context, this).Image.Encode(SKEncodedImageFormat.Png, 100).AsStream();
         }
 
