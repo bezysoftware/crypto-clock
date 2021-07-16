@@ -1,4 +1,4 @@
-using ByteSizeLib;
+﻿using ByteSizeLib;
 using System;
 
 namespace CryptoClock.Data.Models
@@ -13,12 +13,11 @@ namespace CryptoClock.Data.Models
         double MaxFeeRate)
     {
         public string FormattedTimestamp => Height == 0 
-            ? "In ~10 minutes"
+            ? "In ≈10 minutes"
             : $"{(int)(DateTime.UtcNow - Timestamp).TotalMinutes} minutes ago";
         
         public string FormattedSize => ByteSize.FromBytes(Size).ToString();
 
         public string DisplayHeight => Height == 0 ? "Next" : Height.ToString();
     }
-
 }

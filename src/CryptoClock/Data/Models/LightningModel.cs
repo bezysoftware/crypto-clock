@@ -1,7 +1,7 @@
 namespace CryptoClock.Data.Models
 {
-    public record LightningModel(long ConfirmedBalance, long UnconfirmedBalance, long LocalBalance, long RemoteBalance)
+    public record LightningModel(decimal ConfirmedBalance, decimal UnconfirmedBalance, decimal LocalBalance, decimal RemoteBalance)
     {
-        public long TotalBalance => ConfirmedBalance + UnconfirmedBalance;
+        public decimal TotalBalance => ConfirmedBalance + UnconfirmedBalance;
     }
 }

@@ -1,7 +1,10 @@
-﻿using CryptoClock.Widgets.Rendering.Nodes;
+﻿using CryptoClock.Extensions;
+using CryptoClock.Extensions.Functions;
+using CryptoClock.Widgets.Rendering.Nodes;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Scriban;
+using Scriban.Runtime;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,10 +23,14 @@ namespace CryptoClock.Widgets.Repository
         private static string WidgetConfigsDefaultFileName = "defaultwidgets.json";
         
         private readonly ILogger<WidgetRepository> log;
+        private readonly TemplateContext templateContext;
 
         public WidgetRepository(ILogger<WidgetRepository> log)
         {
             this.log = log;
+
+            this.templateContext = new TemplateContext(new CustomFunctions());
+            this.templateContext.MemberRenamer = x => x.Name;
         }
 
         public IEnumerable<WidgetConfig> GetActiveWidgets()
@@ -70,7 +77,7 @@ namespace CryptoClock.Widgets.Repository
         {
             var file = Path.Combine(WidgetDefinitionsLocation, $"{config.Id}.xml");
             var content = File.ReadAllText(file);
-            var template = Template.Parse(content).Render(new { Model = model, Config = config }, x => x.Name);
+            var template = Template.Parse(content).Render(this.templateContext, new { Model = model, Config = config });
 
             using var reader = new StringReader(template);
 

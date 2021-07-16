@@ -1,5 +1,5 @@
 ﻿<widget description="Shows custom text">
-  <binding sizes="*">
+  <binding sizes="*x*">
 
     <text 
       align="{{ Config.Data['Align'] }}" 

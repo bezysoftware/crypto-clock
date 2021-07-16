@@ -7,7 +7,10 @@ namespace CryptoClock.Widgets.Rendering.Nodes
     public class BindingNode : ElementNodeBase, IVerticalElementsNode, IFontNode
     {
         [XmlAttribute("sizes")]
-        public string Sizes { get; set; }
+        public string SizesString { get; set; }
+
+        [XmlIgnore]
+        public IEnumerable<BindingSize> Sizes => BindingSizeParser.Parse(SizesString);
 
         [XmlAttribute("justify")]
         public JustifyContent Justify { get; set; }

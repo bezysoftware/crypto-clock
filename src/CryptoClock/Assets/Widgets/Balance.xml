@@ -1,8 +1,35 @@
 ﻿<widget description="Your current balance">
-  <binding sizes="*" justify="center">
+  {{
+  formattedBalance = Model.Lightning.TotalBalance | math.format "N8"
+  formattedPrice = price.format(Model.Price.Price, Model.Price.Symbol)
+  formattedFiatBalance = price.format(Model.Price.Price * Model.Lightning.TotalBalance, Model.Price.Symbol)
+  }}
 
-    <text align="center">₿ {{ Model.Lightning.TotalBalance }}</text>
-    <text align="center">~ {{ Model.Price.Symbol }} {{ Model.Price.Price }}</text>
+  <binding sizes="6+x1,6x2,7x2,8x2" justify="center">
+
+    <text align="center">₿ {{ formattedBalance }}</text>
 
   </binding>
+
+  <binding sizes="9+x2" justify="center">
+
+    <text align="center" size="large">₿ {{ formattedBalance }}</text>
+
+  </binding>
+
+  <binding sizes="9+x3+" justify="center">
+
+    <text align="center" size="large">₿ {{ formattedBalance }}</text>
+    <text align="center">x {{ formattedPrice }} ≈ {{ formattedFiatBalance }}</text>
+
+  </binding>
+
+  <binding sizes="6+x3+" justify="center">
+
+    <text align="center">₿ {{ formattedBalance }}</text>
+    <text align="center">x {{ formattedPrice }} ≈ {{ formattedFiatBalance }}</text>
+
+  </binding>
+
+
 </widget>
