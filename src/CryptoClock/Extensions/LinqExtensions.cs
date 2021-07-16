@@ -8,5 +8,26 @@ namespace System.Linq
         {
             return items.GroupBy(property).Select(x => x.First());
         }
+
+        public static IEnumerable<TSource> TakeWhileAggregate<TSource, TAccumulate>(
+            this IEnumerable<TSource> source,
+            TAccumulate seed,
+            Func<TAccumulate, TSource, TAccumulate> func,
+            Func<TAccumulate, bool> predicate)
+        {
+            TAccumulate accumulator = seed;
+            foreach (TSource item in source)
+            {
+                accumulator = func(accumulator, item);
+                if (predicate(accumulator))
+                {
+                    yield return item;
+                }
+                else
+                {
+                    yield break;
+                }
+            }
+        }
     }
 }

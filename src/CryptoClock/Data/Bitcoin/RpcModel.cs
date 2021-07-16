@@ -17,7 +17,12 @@
         double MinFeeRate)
     { }
 
-    internal record Transaction()
+    internal record Transaction(
+        string Id,
+        double Size,
+        double VSize,
+        double Weight,
+        double FeePerVsize)
     { }
 
 }

@@ -15,6 +15,7 @@ namespace CryptoClock.Data
     {
         private readonly BitcoinConfig config;
         private readonly Blockchain blockchain;
+        private readonly Mempool mempool;
 
         public JsonSerializerOptions jsonOptions { get; }
 
@@ -24,6 +25,7 @@ namespace CryptoClock.Data
             
             var client = new BitcoinClient(this.config.ServiceUrl, $"{this.config.Username}:{this.config.Password}");
             this.blockchain = new Blockchain(client);
+            this.mempool = new Mempool(this.blockchain);
             this.jsonOptions = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
@@ -32,7 +34,8 @@ namespace CryptoClock.Data
         public async Task<CryptoModel> EnrichAsync(CryptoModel model)
         {
             var blocks = await GetBlocksAsync(this.config.BlockCount);
-            var mempoolBlock = MempoolBlockCalculator.CalculateMempoolBlock(new Transaction[0]);
+            var txs = await this.mempool.GetMempoolTransactionsAsync();
+            var mempoolBlock = MempoolBlockCalculator.CalculateMempoolBlock(txs);
 
             var result = model with
             {
