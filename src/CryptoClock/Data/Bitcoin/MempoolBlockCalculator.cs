@@ -16,6 +16,11 @@ namespace CryptoClock.Data.Bitcoin
                 .TakeWhileAggregate(0.0, (acc, tx) => acc + tx.Weight, acc => acc <= MaxBlockSize)
                 .ToArray();
 
+            if (!blockTxs.Any()) 
+            {
+                return null;
+            }
+
             var size = blockTxs.Sum(x => x.Size);
             var min = blockTxs.Min(x => x.FeePerVsize);
             var max = blockTxs.Min(x => x.FeePerVsize);
