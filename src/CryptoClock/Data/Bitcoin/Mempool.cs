@@ -20,16 +20,16 @@ namespace CryptoClock.Data.Bitcoin
         public async Task<IEnumerable<Transaction>> GetMempoolTransactionsAsync()
         {
             var json = await this.blockchain.GetRawMempool(BitcoinRpc.Enums.ReturnFormat.ArrayOfTransactionIds);
-            var ids = JsonConvert.DeserializeObject<string[]>(json);
+            var ids = JsonConvert.DeserializeObject<RpcResult<string[]>>(json);
 
             // remove missing
             this.cache.Keys
-                .Except(ids)
+                .Except(ids.Result)
                 .ToList()
                 .ForEach(x => this.cache.Remove(x));
 
             // add new
-            foreach (var id in ids.Except(this.cache.Keys))
+            foreach (var id in ids.Result.Except(this.cache.Keys))
             {
                 var tx = await this.blockchain.GetMemPoolEntry(id);
                 this.cache[id] = JsonConvert.DeserializeObject<Transaction>(tx);
