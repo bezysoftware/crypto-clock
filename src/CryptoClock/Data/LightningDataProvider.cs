@@ -46,8 +46,9 @@ namespace CryptoClock.Data
             var channels = await client.ListChannelsAsync(new ListChannelsRequest());
             var balance = await client.WalletBalanceAsync(new WalletBalanceRequest());
 
-            var local = channels.Channels.Sum(x => x.LocalBalance) / Consts.SatoshisInBitcoinD;
-            var remote = channels.Channels.Sum(x => x.RemoteBalance) / Consts.SatoshisInBitcoinD;
+            Func<Channel, decimal, decimal> initiatorBalance = (channel, balance) => balance + (channel.Initiator ? channel.CommitFee : 0);
+            var local = channels.Channels.Sum(x => initiatorBalance(x, x.LocalBalance)) / Consts.SatoshisInBitcoinD;
+            var remote = channels.Channels.Sum(x => initiatorBalance(x, x.RemoteBalance)) / Consts.SatoshisInBitcoinD;
             var confirmed = balance.ConfirmedBalance / Consts.SatoshisInBitcoinD;
             var unconfirmed = balance.UnconfirmedBalance / Consts.SatoshisInBitcoinD;
 

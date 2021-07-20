@@ -1,8 +1,9 @@
 ﻿<widget description="Your current balance">
   {{
-  formattedBalance = Model.Lightning.TotalBalance | math.format "N8"
+  balance = Model.Lightning.TotalBalance + Model.Lightning.LocalBalance
+  formattedBalance = balance | math.format "N8"
   formattedPrice = price.format(Model.Price.Price, Model.Price.Symbol)
-  formattedFiatBalance = price.format(Model.Price.Price * Model.Lightning.TotalBalance, Model.Price.Symbol)
+  formattedFiatBalance = price.format(Model.Price.Price * balance, Model.Price.Symbol)
   }}
 
   <binding sizes="6+x1,6x2,7x2,8x2" justify="center">
