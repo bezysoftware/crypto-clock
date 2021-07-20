@@ -4,18 +4,18 @@
     <block>
       <row>
         <column>
-          <text align="start">8M</text>
+          <text align="start">{{ Model.Lightning.LocalBalance }}</text>
         </column>
         <column>
-          <text align="end">3M</text>
+          <text align="end">{{ Model.Lightning.RemoteBalance }}</text>
         </column>
       </row>
 
       <row>
-        <column width="8">
+        <column width="{{ Model.Lightning.LocalBalance }}">
           <line size="medium" foreground="#aaa" />
         </column>
-        <column width="3">
+        <column width="{{ Model.Lightning.RemoteBalance }}">
           <line size="medium" foreground="#444" />
         </column>
       </row>

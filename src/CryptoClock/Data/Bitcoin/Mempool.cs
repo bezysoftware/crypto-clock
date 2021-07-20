@@ -39,7 +39,7 @@ namespace CryptoClock.Data.Bitcoin
                 var tx = JsonConvert.DeserializeObject<RpcResult<Transaction>>(txJson).Result;
                 var mempool = JsonConvert.DeserializeObject<RpcResult<MempoolEntry>>(mempoolJson).Result;
 
-                this.cache[id] = new ExtendedTransaction(mempool.Fee * 100_000_000, tx.Size, tx.VSize, tx.Weight);
+                this.cache[id] = new ExtendedTransaction(mempool.Fee * Consts.SatoshisInBitcoin, tx.Size, tx.VSize, tx.Weight);
             }
 
             return this.cache.Values;

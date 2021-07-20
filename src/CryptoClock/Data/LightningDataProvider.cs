@@ -46,12 +46,14 @@ namespace CryptoClock.Data
             var channels = await client.ListChannelsAsync(new ListChannelsRequest());
             var balance = await client.WalletBalanceAsync(new WalletBalanceRequest());
 
-            var local = channels.Channels.Sum(x => x.LocalBalance);
-            var remote = channels.Channels.Sum(x => x.RemoteBalance);
+            var local = channels.Channels.Sum(x => x.LocalBalance) / Consts.SatoshisInBitcoinD;
+            var remote = channels.Channels.Sum(x => x.RemoteBalance) / Consts.SatoshisInBitcoinD;
+            var confirmed = balance.ConfirmedBalance / Consts.SatoshisInBitcoinD;
+            var unconfirmed = balance.UnconfirmedBalance / Consts.SatoshisInBitcoinD;
 
             return model with 
             {
-                Lightning = new LightningModel(balance.ConfirmedBalance, balance.UnconfirmedBalance, local, remote)
+                Lightning = new LightningModel(confirmed, unconfirmed, local, remote)
             };
         }
     }
