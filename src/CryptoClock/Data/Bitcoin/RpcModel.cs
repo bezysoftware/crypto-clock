@@ -1,4 +1,6 @@
-﻿namespace CryptoClock.Data.Bitcoin
+﻿using System;
+
+namespace CryptoClock.Data.Bitcoin
 {
     internal record RpcResult<T>(T Result)
     { }
@@ -18,11 +20,23 @@
     { }
 
     internal record Transaction(
-        string Id,
         double Size,
         double VSize,
-        double Weight,
-        double FeePerVsize)
+        double Weight)
     { }
 
+    internal record MempoolEntry(
+        MempoolFees Fees,
+        double VSize,
+        double Weight,
+        double Fee
+    )
+    { }
+
+    internal record MempoolFees(
+        double Base,
+        double Modified,
+        double Ancestor
+    )
+    { }
 }

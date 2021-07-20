@@ -9,7 +9,7 @@ namespace CryptoClock.Data.Bitcoin
     {
         private const int MaxBlockSize = 4_000_000 * 8;
 
-        public static BlockModel CalculateMempoolBlock(IEnumerable<Transaction> txs)
+        public static BlockModel CalculateMempoolBlock(IEnumerable<ExtendedTransaction> txs)
         {
             var blockTxs = txs
                 .OrderByDescending(x => x.Weight)
@@ -23,9 +23,10 @@ namespace CryptoClock.Data.Bitcoin
 
             var size = blockTxs.Sum(x => x.Size);
             var min = blockTxs.Min(x => x.FeePerVsize);
-            var max = blockTxs.Min(x => x.FeePerVsize);
+            var max = blockTxs.Max(x => x.FeePerVsize);
+            var median = blockTxs.Median(x => x.FeePerVsize);
 
-            return new BlockModel(0, DateTime.UtcNow, blockTxs.Length, size, 5, min, max);
+            return new BlockModel(0, DateTime.UtcNow, blockTxs.Length, size, median, min, max);
         }
     }
 }

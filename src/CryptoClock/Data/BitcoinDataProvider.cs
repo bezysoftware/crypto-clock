@@ -22,10 +22,10 @@ namespace CryptoClock.Data
         public BitcoinDataProvider(IOptions<BitcoinConfig> options)
         {
             this.config = options.Value;
-            
+
             var client = new BitcoinClient(this.config.ServiceUrl, $"{this.config.Username}:{this.config.Password}");
             this.blockchain = new Blockchain(client);
-            this.mempool = new Mempool(this.blockchain);
+            this.mempool = new Mempool(this.blockchain, new RawTransaction(client));
             this.jsonOptions = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,

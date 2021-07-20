@@ -4,9 +4,9 @@ namespace System.Linq
 {
     public static class LinqExtensions
     {
-        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
+        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> source, Func<T, TKey> property)
         {
-            return items.GroupBy(property).Select(x => x.First());
+            return source.GroupBy(property).Select(x => x.First());
         }
 
         public static IEnumerable<TSource> TakeWhileAggregate<TSource, TAccumulate>(
@@ -28,6 +28,27 @@ namespace System.Linq
                     yield break;
                 }
             }
+        }
+
+        public static double Median<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
+        {
+            var array = source.Select(selector).OrderBy(x => x).ToArray();
+
+            if (!array.Any()) 
+            {
+                return 0;
+            }
+
+            var count = array.Count();
+
+            if (count % 2 == 0)
+            {
+                return (array[count / 2 - 1] + array[count / 2]) / 2;
+            } 
+            else
+            {
+                return array[(count - 1) / 2];
+           }
         }
     }
 }

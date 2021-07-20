@@ -22,7 +22,7 @@
         <image align="center" size="medium" spacing="none" name="Assets/Block.png" />
         <text size="xsmall" weight="bold" align="center">{{ block.DisplayHeight }}</text>
         <line size="tiny" foreground="{{ Config.Background }}" />
-        <text size="xsmall" align="center">{{ block.AvgFeeRate }} sat/vB</text>
+        <text size="xsmall" align="center">{{ block.AvgFeeRate | math.round }} sat/vB</text>
         <text size="xsmall" align="center">{{ block.Transactions }} transactions</text>
         <text size="xsmall" align="center">{{ block.FormattedTimestamp }}</text>
       </column>
@@ -37,7 +37,7 @@
         <image align="center" size="large" spacing="none" name="Assets/Block.png" />
         <text size="small" align="center">{{ block.DisplayHeight }}</text>
         <text size="xsmall" align="center">{{ block.FormattedSize }}</text>
-        <text size="xsmall" align="center">{{ block.AvgFeeRate }} sat/vB</text>
+        <text size="xsmall" align="center">{{ block.AvgFeeRate | math.round }} sat/vB</text>
         <text size="xsmall" align="center">{{ block.Transactions }} transactions</text>
         <text size="xsmall" align="center">{{ block.FormattedTimestamp }}</text>
       </column>
@@ -53,8 +53,8 @@
         <text size="small" align="center">{{ block.DisplayHeight }}</text>
         <line size="tiny" foreground="{{ Config.Background }}" />
         <text size="xsmall" align="center">{{ block.FormattedSize }}</text>
-        <text size="xsmall" align="center">{{ block.AvgFeeRate }} sat/vB</text>
-        <text size="xsmall" align="center">{{ block.MinFeeRate }} - {{ block.MaxFeeRate }} sat/vB</text>
+        <text size="xsmall" align="center">{{ block.AvgFeeRate | math.round }} sat/vB</text>
+        <text size="xsmall" align="center">{{ block.MinFeeRate | math.round }} - {{ block.MaxFeeRate | math.round }} sat/vB</text>
         <text size="xsmall" align="center">{{ block.Transactions }} transactions</text>
         <text size="xsmall" align="center">{{ block.FormattedTimestamp }}</text>
       </column>
