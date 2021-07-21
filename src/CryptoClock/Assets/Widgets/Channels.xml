@@ -12,10 +12,10 @@
       </row>
 
       <row>
-        <column width="{{ Model.Lightning.LocalBalance }}">
+        <column width="{{ Model.Lightning.LocalBalance | price.sats }}">
           <line size="medium" foreground="#aaa" />
         </column>
-        <column width="{{ Model.Lightning.RemoteBalance }}">
+        <column width="{{ Model.Lightning.RemoteBalance | price.sats }}">
           <line size="medium" foreground="#444" />
         </column>
       </row>

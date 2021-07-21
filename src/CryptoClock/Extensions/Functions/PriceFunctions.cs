@@ -24,5 +24,10 @@ namespace CryptoClock.Extensions.Functions
 
             return string.Format(culture, $"{{0:C{decimals}}}", price);
         }
+
+        public static int Sats(decimal bitcoins) 
+        {
+            return (int)(bitcoins * Consts.SatoshisInBitcoinD);
+        }
     }
 }
