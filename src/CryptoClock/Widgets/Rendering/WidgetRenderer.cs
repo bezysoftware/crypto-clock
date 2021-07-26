@@ -211,8 +211,9 @@ namespace CryptoClock.Widgets.Rendering
             var paint = context.Paint.Clone();
             var size = context.GetElementSize(line.Size) / 5;
             var height = Math.Max(size, 1);
+            var width = Math.Max(context.AvailableSize.Width, 1);
             var spacing = line.IsDivider ? context.GetElementSize(ElementSize.Small) : 0;
-            var info = new SKImageInfo(context.AvailableSize.Width, height + spacing * 2);
+            var info = new SKImageInfo(width, height + spacing * 2);
             
             using var surface = SKSurface.Create(info);
 
@@ -221,7 +222,7 @@ namespace CryptoClock.Widgets.Rendering
                 paint.Color = SKColor.Parse(line.Foreground);
             }
 
-            surface.Canvas.DrawRect(0, spacing, context.AvailableSize.Width, height, paint);
+            surface.Canvas.DrawRect(0, spacing, width, height, paint);
 
             return new RenderedResult(surface.Snapshot(), info.Size);
         }

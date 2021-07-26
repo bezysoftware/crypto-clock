@@ -1,6 +1,6 @@
 ﻿<widget description="Your current balance">
   {{
-  balance = Model.Lightning.TotalBalance + Model.Lightning.LocalBalance
+  balance = Model.Lightning.Wallet.TotalBalance + Model.Lightning.Total.LocalBalance
   formattedBalance = balance | math.format "N8"
   formattedPrice = price.format(Model.Price.Price, Model.Price.Symbol)
   formattedFiatBalance = price.format(Model.Price.Price * balance, Model.Price.Symbol)

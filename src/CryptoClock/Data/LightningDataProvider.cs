@@ -11,6 +11,7 @@ using Grpc.Net.Client;
 using Microsoft.Extensions.Options;
 
 using static CryptoClock.Data.Lnd.Lightning;
+using System.Collections.Generic;
 
 namespace CryptoClock.Data
 {
@@ -19,6 +20,7 @@ namespace CryptoClock.Data
         private const string ReadOnlyMacaroon = "readonly.macaroon";
         private const string Certificate = "tls.cert";
         private readonly LightningClient client;
+        private readonly Dictionary<string, NodeInfo> nodes;
 
         public LightningDataProvider(IOptions<LightningConfig> options)
         {
@@ -39,6 +41,7 @@ namespace CryptoClock.Data
             });
 
             this.client = new LightningClient(channel);
+            this.nodes = new();
         }
 
         public async Task<CryptoModel> EnrichAsync(CryptoModel model)
@@ -46,16 +49,37 @@ namespace CryptoClock.Data
             var channels = await client.ListChannelsAsync(new ListChannelsRequest());
             var balance = await client.WalletBalanceAsync(new WalletBalanceRequest());
 
+            await PopulateNodesCacheAsync(channels.Channels);
+
             Func<Channel, decimal, decimal> initiatorBalance = (channel, balance) => balance + (channel.Initiator ? channel.CommitFee : 0);
-            var local = channels.Channels.Sum(x => initiatorBalance(x, x.LocalBalance)) / Consts.SatoshisInBitcoinD;
-            var remote = channels.Channels.Sum(x => initiatorBalance(x, x.RemoteBalance)) / Consts.SatoshisInBitcoinD;
+            var chs = channels.Channels
+                .Select(x => new LightningChannelModel(
+                    this.nodes.GetValueOrDefault(x.RemotePubkey)?.Node.Alias ?? x.RemotePubkey,
+                    initiatorBalance(x, x.LocalBalance) / Consts.SatoshisInBitcoinD,
+                    initiatorBalance(x, x.RemoteBalance) / Consts.SatoshisInBitcoinD))
+                .ToArray();
+
             var confirmed = balance.ConfirmedBalance / Consts.SatoshisInBitcoinD;
             var unconfirmed = balance.UnconfirmedBalance / Consts.SatoshisInBitcoinD;
 
             return model with 
             {
-                Lightning = new LightningModel(confirmed, unconfirmed, local, remote)
+                Lightning = new LightningModel(
+                    new LightningWallet(confirmed, unconfirmed),
+                    chs)
             };
+        }
+
+        private async Task PopulateNodesCacheAsync(IEnumerable<Channel> channels)
+        {
+            foreach (var channel in channels)
+            {
+                if (!this.nodes.ContainsKey(channel.RemotePubkey))
+                {
+                    var node = await this.client.GetNodeInfoAsync(new NodeInfoRequest { PubKey = channel.RemotePubkey });
+                    this.nodes[channel.RemotePubkey] = node;
+                }
+            }
         }
     }
 }

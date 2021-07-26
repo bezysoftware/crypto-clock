@@ -9,7 +9,13 @@ namespace CryptoClock.Data.Dummy
         {
             return Task.FromResult(model with
             {
-                Lightning = new LightningModel(1.1005M, 0.0045M, 1.1M, 1.005M)
+                Lightning = new LightningModel(
+                    new LightningWallet(1.1005M, 0.0045M),
+                    new [] 
+                    {
+                        new LightningChannelModel("ACINQ", 1.1M, 1.005M),
+                        new LightningChannelModel("LNDHub", 0.1M, 0.2M),
+                    })
             });
         }
     }

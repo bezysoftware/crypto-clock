@@ -1,21 +1,37 @@
 ﻿<widget description="Shows overview of your lightning channels">
   <binding sizes="6+x2+">
+    {{
+    rows = Config.Placement.Rows // 2
+    for channel in Model.Lightning.ChannelsWithTotal limit:rows
+      first = for.index == 0
+      size = first ? "medium" : "small"
+    }}
+
+    {{ if !first }}
+    <row>
+      <column />
+      <column>
+        <line size="tiny" foreground="#ddd" />
+      </column>
+      <column />
+    </row>
+    {{ end }}
 
     <block>
       <row>
         <column>
-          <text align="start">{{ Model.Lightning.LocalBalance }}</text>
+          <text align="start" size="{{ size }}">{{ channel.LocalBalance }}</text>
         </column>
         <column>
-          <text align="end">{{ Model.Lightning.RemoteBalance }}</text>
+          <text align="end" size="{{ size }}">{{ channel.RemoteBalance }}</text>
         </column>
       </row>
 
       <row>
-        <column width="{{ Model.Lightning.LocalBalance | price.sats }}">
+        <column width="{{ channel.LocalBalance | price.sats }}">
           <line size="medium" foreground="#aaa" />
         </column>
-        <column width="{{ Model.Lightning.RemoteBalance | price.sats }}">
+        <column width="{{ channel.RemoteBalance | price.sats }}">
           <line size="medium" foreground="#444" />
         </column>
       </row>
@@ -25,10 +41,13 @@
           <text size="small" align="start">Max send</text>
         </column>
         <column>
+          <text size="small" align="center">{{ channel.Name }}</text>
+        </column>
+        <column>
           <text size="small" align="end">Max receive</text>
         </column>
       </row>
     </block>
-    
+    {{ end }}
   </binding>
 </widget>

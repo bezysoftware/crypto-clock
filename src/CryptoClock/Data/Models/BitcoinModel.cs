@@ -8,7 +8,7 @@ namespace CryptoClock.Data.Models
         BlockModel MempoolBlock)
     {
         public IEnumerable<BlockModel> BlocksWithMempool => MempoolBlock != null
-            ? new[] { MempoolBlock }.Concat(LastBlocks)
+            ? LastBlocks.Prepend(MempoolBlock)
             : LastBlocks;
     }
 }
